@@ -6,6 +6,6 @@ A network topology simulation-game?
 
 ## Contributors
 
-- [Andrii P](github.com/developkit)
+- [Andrii Provozin](github.com/developik)
 - [Josh Sigurdson](github.com/joshsig)
-- [Darwin Ross]()
+- [Darwin Ross](github.com/darross)
