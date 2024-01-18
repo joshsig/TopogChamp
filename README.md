@@ -1,4 +1,4 @@
-# Wiredolphin
+# TOPOGCHAMP
 
 A network topology simulation-game?
 
