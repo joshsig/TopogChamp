@@ -1,6 +1,6 @@
 # Wiredolphin
 
-A network and packet desktop manager.
+A network topology simulation-game?
 
 > Made as a a project for COMP4300 - Computer Networks
 
