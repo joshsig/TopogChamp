@@ -28,7 +28,7 @@ class MainMenu extends Phaser.Scene {
                 graphics.fillRoundedRect(400 - 150, 200 - 40, 300, 180, 10);
 
                 // Add buttons using the loaded font
-                let playButton = this.add.text(400, 200, 'Play', {
+                let playButton = this.add.text(400, 200, 'Play Game', {
                     fontFamily: 'sofia',
                     fontSize: '48px',
                     fill: '#fff'
@@ -38,7 +38,19 @@ class MainMenu extends Phaser.Scene {
                     .on('pointerdown', function () {
                         this.scene.start('GameScene');
                     }, this)
-                    .setPadding(20);
+                    .setPadding(30);
+
+                let simulationButton = this.add.text(400, 250, 'Start Simulation', {
+                    fontFamily: 'sofia',
+                    fontSize: '48px',
+                    fill: '#fff'
+                })
+                    .setOrigin(0.5)
+                    .setInteractive({ useHandCursor: true })
+                    .on('pointerdown', function () {
+                        this.scene.start('SimulationScene');
+                    }, this)
+                    .setPadding(30);
 
                 let optionsButton = this.add.text(400, 300, 'Options', {
                     fontFamily: 'sofia', 
@@ -50,7 +62,7 @@ class MainMenu extends Phaser.Scene {
                     .on('pointerdown', function () {
                         this.scene.start('OptionsScene');
                     }, this)
-                    .setPadding(20);
+                    .setPadding(30);
             },
             inactive: () => {
                 console.error('Failed to load custom font.');
