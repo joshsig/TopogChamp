@@ -23,15 +23,22 @@ class GameScene extends Phaser.Scene {
 
         const graphics = this.add.graphics();
         const curr_wire = new Phaser.Geom.Line();
-        // list of wires
+        // list of wires\
+        let wires = [];
 
         // deselect if clicked outside of any object
         this.input.on('pointerdown', () => {
+
+            this.drawWires(wires, graphics);
 
             if (selectedObject)
             {
                 selectedObject.setTint('0xffffff');
                 selectedObject = null;
+            }
+            if (selectedObject_2) {
+                selectedObject_2.setTint('0xffffff');
+                selectedObject_2 = null;
             }
 
         });
@@ -39,25 +46,26 @@ class GameScene extends Phaser.Scene {
         // draw a wire from the selected object to the mouse
 
         this.input.on('pointermove', (pointer) => {
-            if (selectedObject) {
+
+            
+
+            
+            if (selectedObject && selectedObject_2) {
                 // draw a wire from the selected object to the mouse
                 console.log("drawing wire");
                 graphics.clear();
                 graphics.lineStyle(2, 0x00ff00);
-                graphics.strokeLineShape(curr_wire.setTo(selectedObject.x, selectedObject.y, pointer.x, pointer.y));
+                graphics.strokeLineShape(curr_wire.setTo(selectedObject.x, selectedObject.y, selectedObject_2.x, selectedObject_2.y));
+                wires.push(new WireObject(this, selectedObject, selectedObject_2));
+                this.drawWires(wires, graphics);
+
+                // deselect the objects
+                selectedObject.setTint('0xffffff');
+                selectedObject_2.setTint('0xffffff');
+                selectedObject = null;
+                selectedObject_2 = null;
             }
         });
-
-        this.input.on('down', (pointer) => {
-            if (selectedObject) {
-                // already selected an object
-                // check if the pointer is over an object
-
-                // if it is, connect the wire to the object
-
-            }
-        });
-
         
 
     }
@@ -67,8 +75,13 @@ class GameScene extends Phaser.Scene {
     }
 
     drawWires(wires, graphics) {
-        // take the list of wires and draw them on the screen
-        graphics.clear();
+        if (wires.length > 0) {
+            graphics.clear();
+            for (let i = 0; i < wires.length; i++) {
+                graphics.lineStyle(2, 0x00ff00);
+                graphics.strokeLineShape(new Phaser.Geom.Line(wires[i].conn1.x, wires[i].conn1.y, wires[i].conn2.x, wires[i].conn2.y));
+            }
+        }
 
     }
 
@@ -76,11 +89,10 @@ class GameScene extends Phaser.Scene {
 
 class WireObject {
 
-    constructor(scene, x, y, name, conn1, conn2) {
-        this.name = name;
+    constructor(name, conn1, conn2) {
+        this.name = "id" + Math.random().toString(16).slice(2);
         this.conn1 = conn1;
         this.conn2 = conn2;
-    
     }
 }
 
@@ -116,6 +128,7 @@ class RouterObject extends Phaser.GameObjects.GameObject {
                 selectedObject = null;
             } else if (selectedObject && selectedObject_2 === null) {
                 selectedObject_2 = this;
+                console.log(`${name} clicked`);
                 this.setTint("0x00ff00");
             } else {
                 selectedObject = this;
@@ -156,7 +169,6 @@ class EndSystemObject extends Phaser.GameObjects.GameObject {
         object.on('pointerdown', function (pointer, x,y, event) {
             // check if the pointer is over a object
             // if it is, select the object
-            console.log(`${name} clicked`);
             
             // if there is a selected object, deselect it
             if (selectedObject) {
@@ -166,11 +178,11 @@ class EndSystemObject extends Phaser.GameObjects.GameObject {
             if (selectedObject === object) {
                 selectedObject = null;
             } else if (selectedObject && selectedObject_2 === null) {
+                // there is already a selected object, select this object as the second object
                 selectedObject_2 = this;
-                this.setTint("0x00ff00");
+                this.setTint("0x0000ff");
             } else {
                 selectedObject = this;
-
                 this.setTint("0x00ff00");
             }
 
