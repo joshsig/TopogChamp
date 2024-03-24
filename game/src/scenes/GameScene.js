@@ -1,10 +1,10 @@
 var selectedObject = null;
+var selectedObject_2 = null;
 
 class GameScene extends Phaser.Scene {
     constructor() {
         super({ key: 'GameScene' });
     }
-
     preload() {
         // Load game-related assets
         this.load.image('gameBackground', 'assets/images/gameover-bg.jpg');
@@ -21,12 +21,9 @@ class GameScene extends Phaser.Scene {
         const es1 = new EndSystemObject(this, 450, 400, 'pc1');
         const es2 = new EndSystemObject(this, 450, 400, 'pc2');
 
-        // when clicked on a object, it will be selected
-        // a wire will be drawn from the selected object, and the wire will follow the mouse
-        // when the mouse is released, the wire will be connected to the object that is under the mouse
-        // if the object is not a valid target, the wire will be destroyed
-        // if the object is a valid target, the wire will be connected to the object
-
+        const graphics = this.add.graphics();
+        const curr_wire = new Phaser.Geom.Line();
+        // list of wires
 
         // deselect if clicked outside of any object
         this.input.on('pointerdown', () => {
@@ -45,11 +42,23 @@ class GameScene extends Phaser.Scene {
             if (selectedObject) {
                 // draw a wire from the selected object to the mouse
                 console.log("drawing wire");
+                graphics.clear();
+                graphics.lineStyle(2, 0x00ff00);
+                graphics.strokeLineShape(curr_wire.setTo(selectedObject.x, selectedObject.y, pointer.x, pointer.y));
+            }
+        });
 
-                // draw from selected object to pointer
+        this.input.on('down', (pointer) => {
+            if (selectedObject) {
+                // already selected an object
+                // check if the pointer is over an object
+
+                // if it is, connect the wire to the object
 
             }
         });
+
+        
 
     }
 
@@ -57,7 +66,22 @@ class GameScene extends Phaser.Scene {
         // Update game logic
     }
 
+    drawWires(wires, graphics) {
+        // take the list of wires and draw them on the screen
+        graphics.clear();
 
+    }
+
+}
+
+class WireObject {
+
+    constructor(scene, x, y, name, conn1, conn2) {
+        this.name = name;
+        this.conn1 = conn1;
+        this.conn2 = conn2;
+    
+    }
 }
 
 class RouterObject extends Phaser.GameObjects.GameObject {
@@ -90,6 +114,9 @@ class RouterObject extends Phaser.GameObjects.GameObject {
 
             if (selectedObject === object) {
                 selectedObject = null;
+            } else if (selectedObject && selectedObject_2 === null) {
+                selectedObject_2 = this;
+                this.setTint("0x00ff00");
             } else {
                 selectedObject = this;
 
@@ -138,6 +165,9 @@ class EndSystemObject extends Phaser.GameObjects.GameObject {
 
             if (selectedObject === object) {
                 selectedObject = null;
+            } else if (selectedObject && selectedObject_2 === null) {
+                selectedObject_2 = this;
+                this.setTint("0x00ff00");
             } else {
                 selectedObject = this;
 
