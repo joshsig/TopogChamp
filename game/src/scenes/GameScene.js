@@ -7,23 +7,23 @@ class GameScene extends Phaser.Scene {
     }
     preload() {
         // Load game-related assets
-        this.load.image('gameBackground', 'assets/images/gameover-bg.jpg');
         this.load.image('pc', 'assets/images/pc.png');
         this.load.image('router', 'assets/images/router.png');
         this.load.image('wire', 'assets/images/wire.png');
     }
 
     create() {
-        // Create initial game state
-        const router_1 = new RouterObject(this, 450, 400, 'router1');
-        const router_12 = new RouterObject(this, 450, 400,'router2');
-        const router_123 = new RouterObject(this, 450, 400,'router3');
-        const es1 = new EndSystemObject(this, 450, 400, 'pc1');
-        const es2 = new EndSystemObject(this, 450, 400, 'pc2');
+        // add background
+        this.add.image(400, 300, 'menuBackground').setDisplaySize(800, 600);
+        // level select
+        this.input.keyboard.on('keydown-M', () => {
+            this.scene.start('LevelSelect');
+        });
 
-        const graphics = this.add.graphics();
-        const curr_wire = new Phaser.Geom.Line();
-        // list of wires\
+        
+        // set up level 1
+
+
         let wires = [];
 
         // deselect if clicked outside of any object
@@ -46,9 +46,6 @@ class GameScene extends Phaser.Scene {
         // draw a wire from the selected object to the mouse
 
         this.input.on('pointermove', (pointer) => {
-
-            
-
             
             if (selectedObject && selectedObject_2) {
                 // draw a wire from the selected object to the mouse
@@ -72,6 +69,10 @@ class GameScene extends Phaser.Scene {
 
     update() {
         // Update game logic
+    }
+
+    levelSelect() {
+
     }
 
     drawWires(wires, graphics) {
@@ -202,3 +203,4 @@ class EndSystemObject extends Phaser.GameObjects.GameObject {
     }
 
 }
+		
