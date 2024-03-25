@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Network</title>
+    <title>COMP4300 - Networking Project</title>
+    <link rel="stylesheet" href="style.css" />
     <script
       type="text/javascript"
       src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
     ></script>
-    <style type="text/css">
-      #mynetwork {
-        width: 600px;
-        height: 400px;
-        border: 1px solid lightgray;
-      }
+    <script type="text/javascript" src="levelsData.json"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
     </style>
   </head>
   <body>
-    <div id="mynetwork"></div>
-    <script type="text/javascript">
-      // create an array with nodes
-      var nodes = new vis.DataSet([
-        { id: 1, label: "Node 1" },
-        { id: 2, label: "Node 2" },
-        { id: 3, label: "Node 3" },
-        { id: 4, label: "Node 4" },
-        { id: 5, label: "Node 5" },
-      ]);
+    <h1>Network TopogChamp</h1>
+    <nav id="navbar">
+      <a id="navBtn_selected" href="index.html">Home</a>
+      <a id="navBtn" href="./pages/writeup.html">Write Up</a>
+      <a id="navBtn" href="./pages/game.html">Game</a>
+      <a id="navBtn" href="./pages/simulation.html">Simulation</a>
+    </nav>
 
-      // create an array with edges
-      var edges = new vis.DataSet([
-        { from: 1, to: 3 },
-        { from: 1, to: 2 },
-        { from: 2, to: 4 },
-        { from: 2, to: 5 },
-        { from: 3, to: 3 },
-      ]);
-
-      // create a network
-      var container = document.getElementById("mynetwork");
-      var data = {
-        nodes: nodes,
-        edges: edges,
-      };
-      var options = {};
-      var network = new vis.Network(container, data, options);
-    </script>
+    <h2 id="project-by-darwin-andrii-and-josh">
+      Networking Project by Darwin, Andrii, and Josh
+    </h2>
+    <p>This project has two sections.</p>
+    <ol>
+      <li>
+        <p>The Game</p>
+        <p>
+          This game shows users levels of increasing complexity, giving them a
+          visualization of common networking architectures. Users are enabled to
+          alter the networks and learn as they play!
+        </p>
+      </li>
+      <li>
+        <p>The Simulation</p>
+        <p>
+          The simulation takes the user&#39;s network and finds DNS servers they
+          are connected to. This is then displayed to the user in a visual
+          format.
+        </p>
+      </li>
+    </ol>
+    <p>
+      The game and simulation are designed to be educational and fun. We hope
+      you enjoy them!
+    </p>
   </body>
 </html>

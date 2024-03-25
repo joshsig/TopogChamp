@@ -1,0 +1,357 @@
+{
+    "ring": {
+        "nodes": [
+            { "id": 1, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": 2, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": 3, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": 4, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": 5, "label": "", "image": "/images/pc.png", "shape": "image" }
+        ],
+        "edges": [
+            
+        ],
+        "answer_edges": [
+            { "from": 1, "to": 2 },
+            { "from": 2, "to": 3 },
+            { "from": 3, "to": 4 },
+            { "from": 4, "to": 5 },
+            { "from": 5, "to": 1 }
+        ],
+        "options": {
+            "manipulation": "{enabled: true}",
+            "arrows": "false"
+    },
+    "level1": {
+            "nodes": [
+                    { "id": 1, "label": "Router 1", "image": "/images/router.png", "shape": "image" },
+                    { "id": 2, "label": "Node 2" },
+                    { "id": 3, "label": "Node 3" },
+                    { "id": 4, "label": "Node 4" },
+                    { "id": 5, "label": "Node 5" }
+            ],
+            "edges": [
+                    { "from": 1, "to": 3 },
+                    { "from": 1, "to": 2 },
+                    { "from": 2, "to": 4 },
+                    { "from": 2, "to": 5 },
+                    { "from": 3, "to": 3 }
+            ]
+    },
+    "level2": {
+            "nodes": [
+                    { "id": 6, "label": "Node A" },
+                    { "id": 7, "label": "Node B" },
+                    { "id": 8, "label": "Node C" },
+                    { "id": 9, "label": "Node D" },
+                    { "id": 10, "label": "Node E" }
+            ],
+            "edges": [
+                    { "from": 6, "to": 8 },
+                    { "from": 6, "to": 7 },
+                    { "from": 7, "to": 9 },
+                    { "from": 7, "to": 10 },
+                    { "from": 8, "to": 8 }
+            ]
+    },
+    "level3": {
+            "nodes": [
+                {
+                    "id": 1,
+                    "label": "Sender 00"
+                },
+                {
+                    "id": 2,
+                    "label": "Sender 01"
+                },
+                {
+                    "id": 3,
+                    "label": "Sender 10"
+                },
+                {
+                    "id": 4,
+                    "label": "Sender 11"
+                },
+                {
+                    "id": 5,
+                    "label": "Router 1",
+                    "image": "/images/router.png",
+                    "shape": "image"
+                },
+                {
+                    "id": 6,
+                    "label": "Receiver 00"
+                },
+                {
+                    "id": 7,
+                    "label": "Receiver 01"
+                },
+                {
+                    "id": 8,
+                    "label": "Receiver 10"
+                },
+                {
+                    "id": 9,
+                    "label": "Receiver 11"
+                }
+            ],
+            "edges": [
+                {
+                    "id": 1,
+                    "from": 1,
+                    "to": 5
+                },
+                {
+                    "id": 2,
+                    "from": 2,
+                    "to": 5
+                },
+                {
+                    "id": 3,
+                    "from": 3,
+                    "to": 5
+                },
+                {
+                    "id": 4,
+                    "from": 4,
+                    "to": 5
+                },
+                {
+                    "id": 5,
+                    "from": 5,
+                    "to": 6
+                },
+                {
+                    "id": 6,
+                    "from": 5,
+                    "to": 7
+                },
+                {
+                    "id": 7,
+                    "from": 5,
+                    "to": 8
+                },
+                {
+                    "id": 8,
+                    "from": 5,
+                    "to": 9
+                }
+            ]
+        },
+        "level4": {
+            "nodes": [
+                {
+                    "id": 1,
+                    "label": "Sender 00"
+                },
+                {
+                    "id": 2,
+                    "label": "Sender 01"
+                },
+                {
+                    "id": 3,
+                    "label": "Sender 10"
+                },
+                {
+                    "id": 4,
+                    "label": "Sender 11"
+                },
+                {
+                    "id": 5,
+                    "label": "Router 1",
+                    "image": "/images/router.png",
+                    "shape": "image"
+                },
+                {
+                    "id": 6,
+                    "label": "Router 2",
+                    "image": "/images/router.png",
+                    "shape": "image"
+                },
+                {
+                    "id": 7,
+                    "label": "Router 3",
+                    "image": "/images/router.png",
+                    "shape": "image"
+                },
+                {
+                    "id": 8,
+                    "label": "Receiver 00"
+                },
+                {
+                    "id": 9,
+                    "label": "Receiver 01"
+                },
+                {
+                    "id": 10,
+                    "label": "Receiver 10"
+                },
+                {
+                    "id": 11,
+                    "label": "Receiver 11"
+                }
+            ],
+            "edges": [
+                {
+                    "id": 1,
+                    "from": 1,
+                    "to": 5
+                },
+                {
+                    "id": 2,
+                    "from": 2,
+                    "to": 5
+                },
+                {
+                    "id": 3,
+                    "from": 3,
+                    "to": 6
+                },
+                {
+                    "id": 4,
+                    "from": 4,
+                    "to": 6
+                },
+                {
+                    "id": 5,
+                    "from": 5,
+                    "to": 6
+                },
+                {
+                    "id": 6,
+                    "from": 6,
+                    "to": 5
+                },
+                {
+                    "id": 7,
+                    "from": 5,
+                    "to": 10
+                },
+                {
+                    "id": 8,
+                    "from": 7,
+                    "to": 8
+                },
+                {
+                    "id": 9,
+                    "from": 7,
+                    "to": 11
+                },
+                {
+                    "id": 10,
+                    "from": 6,
+                    "to": 9
+                },
+                {
+                    "id": 11,
+                    "from": 6,
+                    "to": 7
+                }
+            ]
+        },
+        "level5": {
+                "nodes": [
+                  {
+                    "id": 1,
+                    "label": "Sender 00"
+                  },
+                  {
+                    "id": 2,
+                    "label": "Sender 01"
+                  },
+                  {
+                    "id": 3,
+                    "label": "Sender 10"
+                  },
+                  {
+                    "id": 4,
+                    "label": "Sender 11"
+                  },
+                  {
+                    "id": 5,
+                    "label": "Router 1"
+                  },
+                  {
+                    "id": 6,
+                    "label": "Router 2"
+                  },
+                  {
+                    "id": 7,
+                    "label": "Router 3"
+                  },
+                  {
+                    "id": 8,
+                    "label": "Receiver 00"
+                  },
+                  {
+                    "id": 9,
+                    "label": "Receiver 01"
+                  },
+                  {
+                    "id": 10,
+                    "label": "Receiver 10"
+                  },
+                  {
+                    "id": 11,
+                    "label": "Receiver 11"
+                  }
+                ],
+                "edges": [
+                  {
+                    "id": 1,
+                    "from": 1,
+                    "to": 5
+                  },
+                  {
+                    "id": 2,
+                    "from": 2,
+                    "to": 5
+                  },
+                  {
+                    "id": 3,
+                    "from": 3,
+                    "to": 6
+                  },
+                  {
+                    "id": 4,
+                    "from": 4,
+                    "to": 6
+                  },
+                  {
+                    "id": 5,
+                    "from": 5,
+                    "to": 6
+                  },
+                  {
+                    "id": 6,
+                    "from": 6,
+                    "to": 5
+                  },
+                  {
+                    "id": 7,
+                    "from": 5,
+                    "to": 10
+                  },
+                  {
+                    "id": 8,
+                    "from": 7,
+                    "to": 8
+                  },
+                  {
+                    "id": 9,
+                    "from": 7,
+                    "to": 11
+                  },
+                  {
+                    "id": 10,
+                    "from": 6,
+                    "to": 9
+                  },
+                  {
+                    "id": 11,
+                    "from": 6,
+                    "to": 7
+                  }
+                ]
+            }
+    }      
+}
