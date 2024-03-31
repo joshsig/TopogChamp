@@ -39,6 +39,12 @@ h1 {
     margin:0;
 }
 
+h2 {
+    text-align: center;
+    text-decoration: underline;
+
+}
+
 nav {
     background-color: var(--jewel);
     color: #284B63;
@@ -50,6 +56,13 @@ nav {
 
 #level_select {
     
+}
+
+p {
+
+    font-variation-settings: 'wght' 100;
+    font-size: 20px;
+
 }
 
 #navBtn {

@@ -7,7 +7,6 @@ fetch('/levelsData.json')
     return response.json();
   })
   .then(data => {
-    // You can perform further operations with the data here
     levelsData = data;
     updateData("ring");
   })
@@ -33,9 +32,19 @@ function updateData(selectedLevel) {
             nodes: nodes,
             edges: edges,
           };
+          
+          // ensure json has valid data
+        try   {
+          arrows = selectedData.options.arrows;
+          manipulation = selectedData.options.manipulation;
+        } catch (e) {
+          arrows = true
+          manipulation = true
+        }
 
         var options = {
-            manipulation: Boolean(selectedData.options.manipulation),
+            manipulation: Boolean(manipulation),
+            edges: { arrows: { to: {enabled: Boolean(arrows)} } }
         };
         network = new vis.Network(container, data, options);
     } else {

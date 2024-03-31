@@ -20,7 +20,8 @@
         "options": {
             "manipulation": "{enabled: true}",
             "arrows": "false"
-    },
+        }
+},
     "level1": {
             "nodes": [
                     { "id": 1, "label": "Router 1", "image": "/images/router.png", "shape": "image" },
@@ -35,7 +36,11 @@
                     { "from": 2, "to": 4 },
                     { "from": 2, "to": 5 },
                     { "from": 3, "to": 3 }
-            ]
+            ],
+            "options": {
+                "manipulation": "{enabled: true}",
+                "arrows": "to"
+            }
     },
     "level2": {
             "nodes": [
@@ -354,4 +359,3 @@
                 ]
             }
     }      
-}
