@@ -80,6 +80,11 @@ p {
     border-radius: 12px;
 }
 
+#navBtn:hover {
+    background-color: var(--fusch);
+    color: #D9D9D9;
+}
+
 #navBtn_selected {
     background-color: var(--fusch);
     color: #D9D9D9;
@@ -93,4 +98,104 @@ p {
     margin: 4px 2px;
     transition-duration: 0.4s;
     border-radius: 12px;
+}
+
+.controlButton {
+    background-color: var(--fusch);
+    color: #D9D9D9;
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    border-radius: 12px;
+}
+
+.controlButton:hover {
+    background-color: var(--jewel);
+    color: #D9D9D9;
+}
+
+#submitAnswerBtn {
+    background-color: #8ac03e;
+}
+
+#submitAnswerBtn:hover {
+    background-color: var(--jewel);
+}
+
+#resetButton {
+    background-color: #876bd0;
+}
+
+#resetButton:hover {
+    background-color: red;
+}
+
+#controlButtonContainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 15vw;
+    flex-direction: column;
+}
+
+#goal_wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    max-width: 20vw;
+    flex-direction: column;
+}
+
+#game {
+    display: flex;
+}
+
+.levelValue {
+    text-align: left;
+}
+
+#sim {
+    background-color: aliceblue;
+    display: flex;
+    min-width: 100vw;
+    min-height: 80vh;
+    border: none;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+#writeup {
+    max-width: 80vw;
+    margin:auto;
+    justify-content: center;
+    padding: 30px;
+    flex-direction: column;
+}
+
+#writeup h1 {
+    text-align: center;
+    font-size: 36px;
+}
+
+#writeup h2 {
+    text-decoration: none;
+}
+
+.writeup_header {
+    text-align: left;
+    font-size: 24px;
+}
+
+#contributors {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 24px;
+    flex-direction: column;
+    align-items: flex-end;
 }

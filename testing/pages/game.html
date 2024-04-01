@@ -16,20 +16,45 @@
     <nav id="navbar">
       <a id="navBtn" href="/index.html">Home</a>
       <a id="navBtn" href="/pages/writeup.html">Write Up</a>
-      <a id="navBtn_selected" href="./pages/game.html">Game</a>
+      <a id="navBtn_selected" href="/pages/game.html">Game</a>
       <a id="navBtn" href="/pages/simulation.html">Simulation</a>
     </nav>
-    <select id="levelSelect" onchange="updateData(this.value)">
-      <option value="ring">Ring</option>
-      <option value="level1">Level 1</option>
-      <option value="level2">Level 2</option>
-      <option value="level3">Level 3</option>
-      <option value="level4">Level 4</option>
-      <option value="level5">Level 5</option>
-      <!-- Add more options for additional levels -->
-    </select>
-    <button id="submitAnswerBtn" onclick="submitAnswer()">Submit Answer</button>
-    <div id="mynetwork"></div>
+    <div id="game">
+      <div id="controlButtonContainer">
+        <div id="goal_wrapper">
+          <h3>Level Goal:</h3>
+          <div id="goal"></div>
+        </div>
+        <select
+          class="controlButton"
+          id="levelSelect"
+          onchange="updateData(this.value)"
+        >
+          <option class="levelValue" value="ring">Ring</option>
+          <option class="levelValue" value="star">Star</option>
+          <option class="levelValue" value="bus">Bus</option>
+          <option class="levelValue" value="fully_connected">
+            Fully Connected Mesh
+          </option>
+          <option class="levelValue" value="partial_connected">
+            Partially Connected Mesh
+          </option>
+          <!-- Add more options for additional levels -->
+        </select>
+
+        <button
+          class="controlButton"
+          id="submitAnswerBtn"
+          onclick="submitAnswer()"
+        >
+          Submit Answer
+        </button>
+        <button class="controlButton" id="resetButton" onclick="resetData()">
+          Reset Network
+        </button>
+      </div>
+      <div id="mynetwork"></div>
+    </div>
     <script type="text/javascript" src="/main.js"></script>
   </body>
 </html>

@@ -1,27 +1,95 @@
 {
     "ring": {
         "nodes": [
-            { "id": 1, "label": "", "image": "/images/pc.png", "shape": "image" },
-            { "id": 2, "label": "", "image": "/images/pc.png", "shape": "image" },
-            { "id": 3, "label": "", "image": "/images/pc.png", "shape": "image" },
-            { "id": 4, "label": "", "image": "/images/pc.png", "shape": "image" },
-            { "id": 5, "label": "", "image": "/images/pc.png", "shape": "image" }
+            { "id": "pc0", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc1", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc2", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc3", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc4", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" }
         ],
         "edges": [
             
         ],
-        "answer_edges": [
-            { "from": 1, "to": 2 },
-            { "from": 2, "to": 3 },
-            { "from": 3, "to": 4 },
-            { "from": 4, "to": 5 },
-            { "from": 5, "to": 1 }
+        "options": {
+            "manipulation": "{enabled: true}",
+            "arrows": "false"
+        },
+        "goal": "Create a ring topology with the given nodes."
+    },
+    "star": {
+        "nodes": [
+            { "id": "pc0", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc1", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc2", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc3", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc4", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "r0", "x": 50, "y": 100, "label": "", "image": "/images/switch.png", "shape": "image" }
+        ],
+        "edges": [
+            
         ],
         "options": {
             "manipulation": "{enabled: true}",
             "arrows": "false"
-        }
-},
+        },
+        "goal": "Create a star topology with the given nodes and switch."
+    },
+    "bus": {
+        "nodes": [
+            { "id": "pc0", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc1", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc2", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc3", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc4", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc5", "x": 50, "y": 0, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "s0", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "s1", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "s2", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "s3", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "s4", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "s5", "x": 50, "y": -70, "label": "", "image": "/images/switch.png", "shape": "image" },
+            { "id": "t0", "x": 50, "y": 70, "label": "", "image": "/images/dot-dot.png", "shape": "image" },
+            { "id": "t1", "x": 50, "y": 70, "label": "", "image": "/images/dot-dot.png", "shape": "image" }
+        ],
+        "edges": [
+            
+        ],
+        "goal": "Create a bus topology with the given nodes and switches."
+    },
+    "fully_connected": {
+        "nodes": [
+            { "id": "pc0", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc1", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc2", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc3", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc4", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" }
+        ],
+        "edges": [
+            
+        ],
+        "options": {
+            "manipulation": "{enabled: true}",
+            "arrows": "false"
+        },
+        "goal": "Create a fully connected mesh network topology with the given nodes."
+    },
+    "partial_connected": {
+        "nodes": [
+            { "id": "pc0", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc1", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc2", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc3", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" },
+            { "id": "pc4", "x": 50, "y": 10, "label": "", "image": "/images/pc.png", "shape": "image" }
+        ],
+        "edges": [
+            
+        ],
+        "options": {
+            "manipulation": "{enabled: true}",
+            "arrows": "false"
+        },
+        "goal": "Create a partially connected mesh network topology with the given nodes."
+    },
     "level1": {
             "nodes": [
                     { "id": 1, "label": "Router 1", "image": "/images/router.png", "shape": "image" },
