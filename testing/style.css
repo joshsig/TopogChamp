@@ -204,3 +204,13 @@ p {
     margin: 30px;
     min-height: 30px;
 }
+
+#hotkeys {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+#hotkeys p {
+    margin: 10px;
+}

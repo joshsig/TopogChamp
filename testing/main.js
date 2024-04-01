@@ -63,6 +63,27 @@ function updateData(selectedLevel) {
             },
         };
         network = new vis.Network(container, data, options);
+
+        let adding_edge = false;
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                submitAnswer();
+            } else if (event.key === "r") {
+                    resetData();
+            } else if (event.key === "e") {
+                if(!adding_edge) {
+                    network.addEdgeMode();
+                    adding_edge = !adding_edge;
+                } else {
+                    network.disableEditMode();
+                    adding_edge = !adding_edge;
+                }
+            } else if (event.key === "d") {
+                network.deleteSelected();
+            }
+        });
+
     } else {
         console.error("Selected level data not found.");
     }
