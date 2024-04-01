@@ -1,5 +1,6 @@
 var selectedObject = null;
 var selectedObject_2 = null;
+var popUpWindow = null;
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -121,8 +122,14 @@ class RouterObject extends Phaser.GameObjects.GameObject {
             
             // if there is a selected object, deselect it
             if (selectedObject) {
-                selectedObject.setTint("0xffffff");
+                selectedObject.setTint("0xffffff");    
             }
+
+            if (popUpWindow) {
+                popUpWindow.destroy();
+                popUpWindow = null; // Reset popUpWindow reference
+            }
+
 
             if (selectedObject === object) {
                 selectedObject = null;
@@ -132,13 +139,33 @@ class RouterObject extends Phaser.GameObjects.GameObject {
                 this.setTint("0x00ff00");
             } else {
                 selectedObject = this;
-
                 this.setTint("0x00ff00");
+
+                popUpWindow = createPopUp(scene, this);
             }
 
             event.stopPropagation();
 
         });
+
+        function createPopUp(scene, object) {
+            const popUp = scene.add.container(1000, 0);
+            const graphics = scene.add.graphics();
+            graphics.fillStyle(0xFFFFFF, 0.7);
+            graphics.fillRoundedRect(0, 0, 200, 100, 10);
+            popUp.add(graphics);
+
+            const nameLabel = scene.add.text(10, 10, `Name: ${name}`, { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
+            popUp.add(nameLabel);
+
+            const coordinatesLabel = scene.add.text(10, 30, `Coordinates: (${object.x}, ${object.y})`, { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
+            popUp.add(coordinatesLabel);
+
+            const networkingLabel = scene.add.text(10, 70, `Networking:`, { fontFamily: 'Arial', fontSize: 16, color: '#ffffff' });
+            popUp.add(networkingLabel);
+
+            return popUp;
+        }
     
     }
 

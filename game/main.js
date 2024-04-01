@@ -3,7 +3,7 @@ var config = {
     type: Phaser.AUTO,
     width: 1200,
     height: 900,
-    scene: [MainMenu, GameScene, OptionsScene],
+    scene: [MainMenu, GameScene, SimulationScene, OptionsScene],
 };
 
 var game = new Phaser.Game(config);

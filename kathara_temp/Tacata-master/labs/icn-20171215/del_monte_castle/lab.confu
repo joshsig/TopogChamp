@@ -1,0 +1,87 @@
+as1r1[0]="H"			$ip(10.0.0.30/30)
+as1r1[1]="A"			$ip(10.0.0.1/30)
+# Remember to add `network 10.0.0.0/30` - `network 10.0.0.28/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.2 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as1r1, 1, as2r1|eth0)
+$bgp(as1r1, 1, as8r1|eth1)
+
+as2r1[0]="A"			$ip(10.0.0.2/30)
+as2r1[1]="B"			$ip(10.0.0.5/30)
+# Remember to add `network 10.0.0.4/30` - `network 10.0.0.0/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.6 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as2r1, 2, as1r1|eth1)
+$bgp(as2r1, 2, as3r1|eth0)
+
+as3r1[0]="B"			$ip(10.0.0.6/30)
+as3r1[1]="C"			$ip(10.0.0.9/30)
+# Remember to add `network 10.0.0.8/30` - `network 10.0.0.4/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.10 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as3r1, 3, as2r1|eth1)
+$bgp(as3r1, 3, as4r1|eth0)
+
+as4r1[0]="C"			$ip(10.0.0.10/30)
+as4r1[1]="D"			$ip(10.0.0.13/30)
+# Remember to add `network 10.0.0.12/30` - `network 10.0.0.8/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.14 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as4r1, 4, as3r1|eth1)
+$bgp(as4r1, 4, as5r1|eth0)
+
+as5r1[0]="D"			$ip(10.0.0.14/30)
+as5r1[1]="E"			$ip(10.0.0.17/30)
+# Remember to add `network 10.0.0.16/30` - `network 10.0.0.12/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.18 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as5r1, 5, as4r1|eth1)
+$bgp(as5r1, 5, as6r1|eth0)
+
+as6r1[0]="E"			$ip(10.0.0.18/30)
+as6r1[1]="F"			$ip(10.0.0.21/30)
+# Remember to add `network 10.0.0.20/30` - `network 10.0.0.16/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.22 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as6r1, 6, as5r1|eth1)
+$bgp(as6r1, 6, as7r1|eth0)
+
+as7r1[0]="F"			$ip(10.0.0.22/30)
+as7r1[1]="G"			$ip(10.0.0.25/30)
+# Remember to add `network 10.0.0.24/30` - `network 10.0.0.20/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.26 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as7r1, 7, as6r1|eth1)
+$bgp(as7r1, 7, as8r1|eth0)
+
+as8r1[0]="G"			$ip(10.0.0.26/30)
+as8r1[1]="H"			$ip(10.0.0.29/30)
+# Remember to add `network 10.0.0.28/30` - `network 10.0.0.24/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 10.0.0.30 route-map preferThisOne in
+# !
+# route-map preferThisOne permit 10
+# set local-preference 150
+$bgp(as8r1, 8, as7r1|eth1)
+$bgp(as8r1, 8, as1r1|eth0)

@@ -1,0 +1,71 @@
+pc1[0]="A1C1"			$ip(10.0.1.2/24); to(default, 10.0.1.1)
+
+as1r1[0]="A1A2C1"		$ip(10.20.1.2/30);
+as1r1[1]="A1C2"			$ip(10.0.2.1/30)
+as1r1[2]="A1C1"			$ip(10.0.1.1/24)
+# Remember to add `network 10.0.0.0/16` - `network 10.20.1.0/30` in bgpd.conf file.
+$bgp(as1r1, 1, as1r2|eth1)
+$bgp(as1r1, 1, as2r2|eth3)
+$rip(as1r1, 10.0.0.0/16, connected)
+
+as1r2[0]="A1A2C2"		$ip(10.20.2.2/30)
+as1r2[1]="A1C2"			$ip(10.0.2.2/30)
+# Remember to add `network 10.0.0.0/16` - `network 10.20.2.0/30` in bgpd.conf file.
+$bgp(as1r2, 1, as1r1|eth1)
+$bgp(as1r2, 1, as2r1|eth1)
+$rip(as1r2, 10.0.0.0/16, connected)
+
+as2r1[0]="A20C2"		$ip(20.0.2.1/30)
+as2r1[1]="A1A2C2"		$ip(10.20.2.1/30)
+as2r1[2]="A20C1"		$ip(20.0.1.1/30)
+# Remember to add `network 20.0.0.0/16` - `network 10.20.2.0/30` in bgpd.conf file.
+$bgp(as2r1, 2, as1r2|eth0)
+$bgp(as2r1, 2, as2r2|eth2)
+$bgp(as2r1, 2, as2r3|eth1)
+$rip(as2r1, 20.0.0.0/16, connected)
+
+as2r2[0]="A2A3C1"		$ip(20.30.1.1/30)
+as2r2[1]="A20C3"		$ip(20.0.3.1/30)
+as2r2[2]="A20C1"		$ip(20.0.1.2/30)
+as2r2[3]="A1A2C1"		$ip(10.20.1.1/30)
+# Remember to add `network 20.0.0.0/16` - `network 10.20.1.0/30` - `network 20.30.1.0/30` in bgpd.conf file.
+$bgp(as2r2, 2, as1r1|eth0)
+$bgp(as2r2, 2, as2r1|eth2)
+$bgp(as2r2, 2, as2r3|eth2)
+$bgp(as2r2, 2, as3r1|eth1)
+$rip(as2r2, 20.0.0.0/16, connected)
+
+as2r3[0]="A2A3C2"		$ip(20.30.2.1/30)
+as2r3[1]="A20C2"		$ip(20.0.2.2/30)
+as2r3[2]="A20C3"		$ip(20.0.3.2/30)
+# Remember to add `network 20.0.0.0/16` - `network 20.30.2.0/30` in bgpd.conf file.
+$bgp(as2r3, 2, as2r1|eth0)
+$bgp(as2r3, 2, as2r2|eth1)
+$bgp(as2r3, 2, as3r2|eth0)
+$rip(as2r3, 20.0.0.0/16, connected)
+
+as3r1[0]="A3C2"			$ip(30.0.2.1/30)
+as3r1[1]="A2A3C1"		$ip(20.30.1.2/30)
+as3r1[2]="A3C1"			$ip(30.0.1.1/24)
+# Remember to add `network 30.0.0.0/16` - `network 20.30.1.0/30` in bgpd.conf file.
+$bgp(as3r1, 3, as3r2|eth1)
+$bgp(as3r1, 3, as2r2|eth0)
+$rip(as3r1, 30.0.0.0/16, connected)
+
+as3r2[0]="A2A3C2"		$ip(20.30.2.2/30)
+as3r2[1]="A3C2"			$ip(30.0.2.2/30)
+# Remember to add `network 30.0.0.0/16` - `network 20.30.2.0/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 20.30.2.1 route-map preferThisLink in
+# neighbor 20.30.2.1 route-map pleaseDePreferMe out
+# !
+# route-map preferThisLink permit 10
+# set local-preference 200
+# !
+# route-map pleaseDePreferMe permit 10
+# set metric 10
+$bgp(as3r2, 3, as3r1|eth0)
+$bgp(as3r2, 3, as2r3|eth0)
+$rip(as3r2, 30.0.0.0/16, connected)
+
+pc2[0]="A3C1"			$ip(30.0.1.2/24); to(default, 30.0.1.1)

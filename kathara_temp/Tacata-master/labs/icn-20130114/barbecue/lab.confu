@@ -1,0 +1,123 @@
+pc1[0]="L"		$ip(60.0.0.10/24); to(default, 60.0.0.1)
+
+as60r1[0]="L"		$ip(60.0.0.1/24)
+as60r1[1]="D"		$ip(30.60.0.2/30)
+as60r1[2]="E"		$ip(50.60.0.2/30)
+# Write route-map as follows: 
+# neighbor 30.60.0.1 route-map chooseThis in
+# neighbor 50.60.0.1 route-map chooseThat in
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# access-list pc2Prefix permit 10.1.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc2Prefix
+#     set local-preference 200
+# route-map chooseThat permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+$bgp(as60r1, 60, as30r1|eth0); bgp_announce(as60r1, 30.60.0.0/30)
+$bgp(as60r1, 60, as50r1|eth0); bgp_announce(as60r1, 50.60.0.0/30)
+$bgp_announce(as60r1, 60.0.0.0/24)
+
+as50r1[0]="E"		$ip(50.60.0.1/30)
+as50r1[1]="I"		$ip(50.30.0.1/30)
+as50r1[2]="H"		$ip(20.50.0.2/30)
+as50r1[3]="G"		$ip(10.50.0.2/30)
+as50r1[4]="F"		$ip(40.50.0.2/30)
+# Write route-map as follows: 
+# neighbor 10.50.0.1 route-map chooseThis in
+# neighbor 50.60.0.2 route-map chooseThat in
+# neighbor 20.50.0.1 route-map dontChooseMe out
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# access-list pc2Prefix permit 10.1.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc2Prefix
+#     set local-preference 200
+# route-map chooseThat permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+# route-map dontChooseMe permit 10
+#     set metric 10
+$bgp(as50r1, 50, as60r1|eth2); bgp_announce(as50r1, 50.60.0.0/30)
+$bgp(as50r1, 50, as30r1|eth3); bgp_announce(as50r1, 50.30.0.0/30)
+$bgp(as50r1, 50, as20r1|eth0); bgp_announce(as50r1, 20.50.0.0/30)
+$bgp(as50r1, 50, as10r1|eth1); bgp_announce(as50r1, 10.50.0.0/30)
+$bgp(as50r1, 50, as40r1|eth0); bgp_announce(as50r1, 40.50.0.0/30)
+
+as40r1[0]="F"		$ip(40.50.0.1/30)
+as40r1[1]="A"		$ip(10.40.0.2/30)
+# Write route-map as follows: 
+# neighbor 40.50.0.2 route-map chooseThis in
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+$bgp(as40r1, 40, as50r1|eth4); bgp_announce(as40r1, 40.50.0.0/30)
+$bgp(as40r1, 40, as10r1|eth0); bgp_announce(as40r1, 10.40.0.0/30)
+
+as10r1[0]="A"		$ip(10.40.0.1/30)
+as10r1[1]="G"		$ip(10.50.0.1/30)
+as10r1[2]="B"		$ip(10.20.0.1/30)
+# Write route-map as follows: 
+# neighbor 10.20.0.2 route-map chooseThis in
+# neighbor 10.40.0.2 route-map chooseThat in
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# access-list pc2Prefix permit 10.1.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc2Prefix
+#     set local-preference 200
+# route-map chooseThat permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+$bgp(as10r1, 10, as40r1|eth1); bgp_announce(as10r1, 10.40.0.0/30)
+$bgp(as10r1, 10, as50r1|eth3); bgp_announce(as10r1, 10.50.0.0/30)
+$bgp(as10r1, 10, as20r1|eth3); bgp_announce(as10r1, 10.20.0.0/30)
+
+as20r1[0]="H"		$ip(20.50.0.1/30)
+as20r1[1]="C"		$ip(20.30.0.1/30)
+as20r1[2]="J"		$ip(10.1.0.1/24)
+as20r1[3]="B"		$ip(10.20.0.2/30)
+# Write route-map as follows: 
+# neighbor 10.20.0.1 route-map chooseThis in
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+$bgp(as20r1, 20, as50r1|eth2); bgp_announce(as20r1, 20.50.0.0/30)
+$bgp(as20r1, 20, as30r1|eth2); bgp_announce(as20r1, 20.30.0.0/30)
+$bgp(as20r1, 20, as10r1|eth2); bgp_announce(as20r1, 10.20.0.0/30)
+$bgp_announce(as20r1, 10.1.0.0/24)
+
+as30r1[0]="D"		$ip(30.60.0.1/30)
+as30r1[1]="K"		$ip(10.2.0.1/24)
+as30r1[2]="C"		$ip(20.30.0.2/30)
+as30r1[3]="I"		$ip(50.30.0.2/30)
+# Write route-map as follows: 
+# neighbor 50.30.0.1 route-map chooseThis in
+# neighbor 20.30.0.1 route-map chooseThat in
+# !
+# access-list pc1Prefix permit 60.0.0.0/24
+# access-list pc2Prefix permit 10.1.0.0/24
+# !
+# route-map chooseThis permit 10
+#     match ip address pc2Prefix
+#     set local-preference 200
+# route-map chooseThat permit 10
+#     match ip address pc1Prefix
+#     set local-preference 200
+$bgp(as30r1, 30, as60r1|eth1); bgp_announce(as30r1, 30.60.0.0/30)
+$bgp(as30r1, 30, as20r1|eth1); bgp_announce(as30r1, 20.30.0.0/30)
+$bgp(as30r1, 30, as50r1|eth1); bgp_announce(as30r1, 50.30.0.0/30)
+$bgp_announce(as30r1, 10.2.0.0/24)
+
+pc2[0]="K"		$ip(10.2.0.10/24); to(default, 10.2.0.1)
+pc2[1]="J"		$ip(10.1.0.10/24);

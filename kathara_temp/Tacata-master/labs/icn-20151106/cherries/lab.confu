@@ -1,0 +1,19 @@
+client[0]="A"		$ip(100.0.0.3/24); to(default, 100.0.0.1)
+$ns_resolv(client, localns|eth0)
+
+localns[0]="A"		$ip(100.0.0.2/24); to(default, 100.0.0.1)
+$dns(localns, eth0, None, local)
+
+rtr1[0]="B"		$ip(150.0.0.1/30); to(200.0.0.0/24, 150.0.0.2)
+rtr1[1]="A"		$ip(100.0.0.1/24)
+
+rtr2[0]="B"		$ip(150.0.0.2/30); to(100.0.0.0/24, 150.0.0.1)
+rtr2[1]="C"		$ip(200.0.0.1/24)
+
+rootns[0]="C"		$ip(200.0.0.3/24); to(default, 200.0.0.1)
+itns[0]="C"		$ip(200.0.0.4/24); to(default, 200.0.0.1)
+$dns(rootns, eth0, ROOT, master)
+$dns(itns, eth0, it, master)
+
+webserver[0]="C"	$ip(200.0.0.2/24); to(default, 200.0.0.1); has_name(sito.it)
+$webserver(webserver, userdir)

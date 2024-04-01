@@ -1,0 +1,72 @@
+pc1[0]="A100C1"			$ip(110.0.1.2/24); to(default, 110.0.1.1)
+
+as100r1[0]="A100C2"		$ip(110.0.2.1/30)
+as100r1[1]="A200A100C1"		$ip(120.110.1.2/30)
+as100r1[2]="A100C1"		$ip(110.0.1.1/24)
+# Remember to add `network 110.0.0.0/16` - `network 120.110.1.0/30` in bgpd.conf file.
+$bgp(as100r1, 100, as100r2|eth1)
+$bgp(as100r1, 100, as200r2|eth0)
+$rip(as100r1, 110.0.0.0/16, connected)
+
+as100r2[0]="A200A100C2"		$ip(120.110.2.2/30)
+as100r2[1]="A100C2"		$ip(110.0.2.2/30)
+# Remember to add `network 110.0.0.0/16` - `network 120.110.2.0/30` in bgpd.conf file.
+$bgp(as100r2, 100, as100r1|eth0)
+$bgp(as100r2, 100, as200r3|eth0)
+$rip(as100r2, 110.0.0.0/16, connected)
+
+as200r1[0]="A200C2"		$ip(120.0.2.1/30)
+as200r1[1]="A200A300C1"		$ip(120.130.1.1/30)
+as200r1[2]="A200C1"		$ip(120.0.1.1/30)
+# Remember to add `network 120.0.0.0/16` - `network 120.130.1.0/30` in bgpd.conf file.
+$bgp(as200r1, 200, as300r1|eth2)
+$bgp(as200r1, 200, as200r2|eth2)
+$bgp(as200r1, 200, as200r3|eth2)
+$rip(as200r1, 120.0.0.0/16, connected)
+
+as200r2[0]="A200A100C1"		$ip(120.110.1.1/30)
+as200r2[1]="A200C3"		$ip(120.0.3.1/30)
+as200r2[2]="A200C1"		$ip(120.0.1.2/30)
+# Remember to add `network 120.0.0.0/16` - `network 120.110.1.0/30` in bgpd.conf file.
+$bgp(as200r2, 200, as200r1|eth2)
+$bgp(as200r2, 200, as200r3|eth3)
+$bgp(as200r2, 200, as100r1|eth1)
+$rip(as200r2, 120.0.0.0/16, connected)
+
+as200r3[0]="A200A100C2"		$ip(120.110.2.1/30)
+as200r3[1]="A200A300C2"		$ip(120.130.2.1/30)
+as200r3[2]="A200C2"		$ip(120.0.2.2/30)
+as200r3[3]="A200C3"		$ip(120.0.3.2/30)
+# Remember to add `network 120.0.0.0/16` - `network 120.130.2.0/30` - `network 120.110.2.0/30` in bgpd.conf file.
+$bgp(as200r3, 200, as200r1|eth0)
+$bgp(as200r3, 200, as200r2|eth1)
+$bgp(as200r3, 200, as100r2|eth0)
+$bgp(as200r3, 200, as300r2|eth1)
+$rip(as200r3, 120.0.0.0/16, connected)
+
+as300r1[0]="A300C2"		$ip(130.0.2.1/30)
+as300r1[1]="A300C1"		$ip(130.0.1.1/24)
+as300r1[2]="A200A300C1"		$ip(120.130.1.2/30)
+# Remember to add `network 130.0.0.0/16` - `network 120.130.1.0/30` in bgpd.conf file.
+# Write route-map as follows:
+# neighbor 120.130.1.1 route-map manUseMeAsBkp out
+# neighbor 120.130.1.1 route-map iDontLikeThisNeighbor in
+# !
+# route-map manUseMeAsBkp permit 10
+# set metric 50
+# !
+# route-map iDontLikeThisNeighbor permit 10
+# set local-preference 10
+$bgp(as300r1, 300, as300r2|eth0)
+$bgp(as300r1, 300, as200r1|eth1)
+$rip(as300r1, 130.0.0.0/16, connected)
+
+as300r2[0]="A300C2"		$ip(130.0.2.2/30)
+as300r2[1]="A200A300C2"		$ip(120.130.2.2/30)
+# Remember to add `network 130.0.0.0/16` - `network 120.130.2.0/30` in bgpd.conf file.
+$bgp(as300r2, 300, as300r1|eth0)
+$bgp(as300r2, 300, as200r3|eth1)
+$rip(as300r2, 130.0.0.0/16, connected)
+
+pc2[0]="A300C1"			$ip(130.0.1.2/24); to(default, 130.0.1.1)
+

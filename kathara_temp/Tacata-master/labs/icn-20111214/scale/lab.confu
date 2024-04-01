@@ -1,0 +1,36 @@
+# WARNING: eth-s are shifted of one because of the (in)famous bug in Kathara!
+# Also notice that there's a little variation from the original file because here we use BGP to connect the two halves of the network (instead of static routes).
+as150r1[0]="A150C0"			$ip(100.150.0.151/18)
+$rip(as150r1, 100.150.0.0/16, bgp, connected)
+
+as150r3[0]="A150C0"			$ip(100.150.0.153/18)
+as150r3[1]="A150C64"			$ip(100.150.64.153/18)
+$rip(as150r3, 100.150.0.0/16, bgp, connected)
+
+as150r4[0]="A150C128"			$ip(100.150.128.154/17)
+as150r4[1]="A150C64"			$ip(100.150.64.154/18)
+$rip(as150r4, 100.150.0.0/16, bgp, connected)
+
+as150r2[0]="A20A150"			$ip(10.20.150.152/24)
+as150r2[1]="A150C128"			$ip(100.150.128.152/17)
+$rip(as150r2, 100.150.0.0/16, bgp, connected)
+# Remember to add `network 100.150.0.0/16` in bgpd.conf file.
+$bgp(as150r2, 150, as200r1|eth0)
+
+as200r1[0]="A20A150"			$ip(10.20.150.201/24)
+as200r1[1]="A200C64"			$ip(100.100.64.201/18)
+$ospf(as200r1, 100.100.0.0/16, 0.0.0.0, bgp, connected)
+# Remember to add `network 100.200.0.0/16` in bgpd.conf file.
+$bgp(as200r1, 200, as150r2|eth0)
+
+as200r2[0]="A200C64"			$ip(100.100.64.202/18)
+as200r2[1]="A200C0"			$ip(100.100.0.202/18)
+$ospf(as200r2, 100.100.0.0/16, 0.0.0.0, bgp, connected)
+
+as200r3[0]="A200C128"			$ip(100.100.128.203/17)
+as200r3[1]="A200C64"			$ip(100.100.64.203/18)
+$ospf(as200r3, 100.100.0.0/16, 0.0.0.0, bgp, connected)
+
+as200r4[0]="A200C0"			$ip(100.100.0.204/18)
+as200r4[1]="A200C128"			$ip(100.100.128.204/17)
+$ospf(as200r4, 100.100.0.0/16, 0.0.0.0, bgp, connected)

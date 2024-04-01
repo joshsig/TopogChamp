@@ -1,0 +1,14 @@
+client1[0]="A"    $ip(100.0.0.10/24)
+client2[0]="A"    $ip(100.0.0.11/24)
+
+ws_random[0]="A"  $ip(100.0.0.2/24)
+ws_random[1]="B"  $ip(10.0.0.5/24)
+
+server1[0]="B"    $ip(10.0.0.1/24); to(default, 10.0.0.5)
+$webserver(server1)
+server2[0]="B"    $ip(10.0.0.2/24); to(default, 10.0.0.5)
+$webserver(server2)
+server3[0]="B"    $ip(10.0.0.3/24); to(default, 10.0.0.5)
+$webserver(server3)
+
+$balancer(ws_random, random, eth0, server1|eth0, server2|eth0, server3|eth0)
