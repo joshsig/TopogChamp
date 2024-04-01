@@ -25,6 +25,10 @@ function resetData() {
 
 // Function to update the nodes and edges based on the selected level
 function updateData(selectedLevel) {
+
+    let correct = document.getElementById("correct");
+    correct.innerHTML = "";
+
     selectedData = levelsData[selectedLevel];
     if (selectedData) {
 
@@ -85,7 +89,24 @@ function submitAnswer() {
     for (var i = 0; i < nodes.length; i++) {
         curr_edges.push(network.getConnectedEdges(nodes[i]));
     }
-    
+
+    // generate edge hash table
+
+    // key: edge id
+    // value: every node that has that edge
+    var edgeHash = new Map();
+    for (var i = 0; i < curr_edges.length; i++) {
+        for (var j = 0; j < curr_edges[i].length; j++) {
+            let edge_id = curr_edges[i][j];
+            if (edgeHash.has(edge_id)) {
+                edgeHash.get(edge_id).push(i);
+            } else {
+                edgeHash.set(edge_id, [i]);
+            }
+        
+        }
+    }
+
     // switch statement for each level
     let curr_level = document.getElementById("levelSelect").value;
     let correct = false;
@@ -108,8 +129,11 @@ function submitAnswer() {
             }
             break;
         case "bus":
-            if (busCheck(curr_edges, nodes)) {
+            if (busCheck(curr_edges, nodes, edgeHash)) {
                 correct = true;
+                console.log("Correct answer!")
+            } else {
+                console.log("Incorrect answer.")
             }
             break;
         case "fully_connected":
@@ -132,6 +156,15 @@ function submitAnswer() {
             console.error("Invalid level selected.");
             break;
     }
+
+    if (correct) {
+        let correct= document.getElementById("correct");
+        correct.innerHTML = "Correct!";
+    } else {
+        let correct= document.getElementById("correct");
+        correct.innerHTML = "Incorrect. Try Again.";
+    
+    }
 }
 
 
@@ -149,7 +182,6 @@ function ringCheck(edges, nodes) {
 function starCheck(edges, nodes) {
     // check if the edges are correct
     // if one node has n-1 edges, and the rest have 1 edge, then it is a star
-    console.log(nodes)
     let n = nodes.length;
     let center = -1;
     for (var i = 0; i < edges.length; i++) {
@@ -170,12 +202,22 @@ function starCheck(edges, nodes) {
     return true;
 }
 
-function busCheck(edges, nodes) {
+function busCheck(edges, nodes, edgeHash) {
     // check if the edges are correct
-    // if each node has 1 edge, then it is a bus
+    // if each pc node has 1 edge, each terminator has 1 edge, and each router has 3 edges, then it is a bus
     for (var i = 0; i < edges.length; i++) {
-        if (edges[i].length != 1) {
-            return false;
+        if (nodes[i].startsWith("t")) {
+            
+        }
+
+        if (nodes[i].startsWith("pc") || nodes[i].startsWith("t")) {
+            if (edges[i].length != 1) {
+                return false;
+            }
+        } else if (nodes[i].startsWith("r")) {
+            if (edges[i].length != 3) {
+                return false;
+            }
         }
     }
     return true;
