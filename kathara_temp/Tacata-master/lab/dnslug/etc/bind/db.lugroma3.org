@@ -1,0 +1,8 @@
+$TTL   60000
+@               IN      SOA     dnslug.lugroma3.org.    root.dnslug.lugroma3.org. 2024033113 28800 14400 3600000 0
+
+@     IN  NS  dnslug.lugroma3.org.
+dnslug    IN  A   192.168.0.11
+
+
+pc1 IN  A   192.168.0.111

@@ -18,11 +18,7 @@ finalTodos = []
 ###############
 ## CONSTANTS ##
 ###############
-CONF_INTRO = """LAB_VERSION=1.0
-LAB_AUTHOR="Tacabro"
-LAB_WEB=https://github.com/damiano-massarelli/Tacata
-
-"""
+#CONF_INTRO = """"""
 DEFAULT_GW_STRING = "default"
 LOCALHOST_IP = "127.0.0.1"
 # LOAD BALANCER
@@ -420,7 +416,7 @@ class Nameserver(object):
 
     def dump(self, startupFile):
         # Write bind startup in startup file
-        startupFile.write("/etc/init.d/bind start\n")
+        startupFile.write("systemctl start bind9\n")
 
         # Prepare bind directory for Nameserver dump
         os.makedirs(self.device.name + "/etc/bind")
@@ -928,8 +924,8 @@ class Lab(object):
     def dump(self):
         log("\n============= WRITING lab.conf FILE =============")
         confString = "\n".join(self.confLines)
-        confString = CONF_INTRO + confString
-        with open("lab.conf", "w") as labConfFile:
+        #confString = CONF_INTRO + confString
+        with open("lab.conf", "w", newline='\n') as labConfFile:
             labConfFile.write(confString)
 
         log("- Done!")
@@ -994,7 +990,8 @@ def parse():
             for line in labfile:
                 currentLine += 1
 
-                line = line.replace("\n", "").replace("\r", "").strip()
+                line = line.replace("\r", "").replace("\n", "").rstrip()
+                print(line)
                 if line == "" or line.startswith("#"): # Skip empty lines and comments
                     continue
 
