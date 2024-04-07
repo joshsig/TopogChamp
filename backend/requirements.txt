@@ -1,0 +1,5 @@
+pandas
+psutil
+scapy
+flask
+flask-cors
