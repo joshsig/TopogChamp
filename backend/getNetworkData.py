@@ -130,10 +130,14 @@ def get_network_information(default_interface="Wi-Fi"):
     print("test1", local_network_info['additional_details'])
     local_network_info['additional_details'] = "" # remove unnecessary data
     print("test2", local_network_info['additional_details'])
+    find_host = lambda data, ip: [entry['host'] for entry in data if entry['ip'] == ip]
+
     network_info = {
         'dns_servers': local_network_info['dns_servers'],
         'local_network_info': local_network_info,
         'wifi_ipv4_addresses': {
+            f'my_ip': {'host': 'pc1', 'ip': wifi_ipv4_address,
+                       'dns_host_name': find_host(wifi_ipv4_address_subnet_24, local_network_info["dns_servers"][0])[0]},
             f'{local_network_info["dns_servers"][0]}/28': wifi_ipv4_address_subnet_24
         },
         'timestamp': str(datetime.now())
@@ -153,8 +157,76 @@ def clean_output(output):
 
     return cleaned_output
 
+def convert_to_lab_confu_format():
+    pass
+
+def json_to_lab_confu(json_data):
+    # DNS scenario
+    lab_confu = ""
+
+    # Extract my_ip from JSON data
+    my_ip = json_data["my_ip"]
+
+    # Write pc1 line
+    hostname = my_ip["host"]
+    ip_address = my_ip["ip"]
+    dns_host_name = my_ip["dns_host_name"]
+
+    lab_confu += f"{hostname}[0]=\"A\"        $ip({ip_address}/16); has_name({hostname}.{dns_host_name})\n"
+    lab_confu += f"$ns_resolv({hostname}, {dns_host_name.replace('.', '_').replace('-', '')}|eth0)\n\n"
+
+    # Set resources specifically for u of m
+    u_of_m_dns = [
+        {
+            "host": "umanitoba.ca",
+            "ip": "130.179.16.50",
+            "mac_address": "null",
+            "latency": "null"
+        },
+        {
+            "host": "cc.umanitoba.ca",
+            "ip": "130.179.1.1",
+            "mac_address": "null",
+            "latency": "null"
+        }
+    ]
+
+    data = json_data
+    data['u_of_m_dns_extra'] = u_of_m_dns
+
+    for key, val in data.items():
+        if key != 'my_ip':
+            for item in json_data[key]:
+                hostname_loc = item["host"].replace(".", "_").replace("-", "")
+                ip_address_loc = item["ip"]
+                lab_confu += f"{hostname_loc}[0]=\"A\"     $ip({ip_address_loc}/16)\n"
+
+    lab_confu += "\n\n"
+
+    for key, val in data.items():
+        if key != 'my_ip':
+            for item in json_data[key]:
+                hostname_loc = item["host"].replace(".", "_").replace("-", "")
+                ip_address_loc = item["ip"]
+
+                #if not hostname_loc:
+                #    hostname_loc = ip_address_loc
+
+                lab_confu += f"$dns({hostname_loc}, eth0, {item['host']}, master)\n"
+
+    return lab_confu
+
 if __name__ == "__main__":
     res = get_network_information()
     print("------------------")
     print(res)
-    export_to_json(res["wifi_ipv4_addresses"], f"data_{datetime.now().strftime('%Y-%m-%dT%H-%M-%S')}.json")
+    data = res["wifi_ipv4_addresses"]
+    export_to_json(data, f"data_{datetime.now().strftime('%Y-%m-%dT%H-%M-%S')}.json")
+
+    print(data)
+    lab_confu_content = json_to_lab_confu(data)
+
+    # Save lab.confu content to a file named lab.confu
+    with open("lab.confu", "w") as file:
+        file.write(lab_confu_content)
+

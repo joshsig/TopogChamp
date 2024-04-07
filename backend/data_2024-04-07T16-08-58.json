@@ -1,0 +1,51 @@
+{
+    "my_ip": {
+        "host": "pc1",
+        "ip": "130.179.217.231",
+        "dns_host_name": "ddi-ns3.cc.umanitoba.ca"
+    },
+    "130.179.3.144/28": [
+        {
+            "host": "ddi-ns3.cc.umanitoba.ca",
+            "ip": "130.179.3.144",
+            "mac_address": null,
+            "latency": 3.0
+        },
+        {
+            "host": "ddi-ns4.umanitoba.ca",
+            "ip": "130.179.3.145",
+            "mac_address": null,
+            "latency": 4.0
+        },
+        {
+            "host": "ddi-ns3-2.cc.umanitoba.ca",
+            "ip": "130.179.3.147",
+            "mac_address": null,
+            "latency": 3.0
+        },
+        {
+            "host": "ddi-ns4-1.cc.umanitoba.ca",
+            "ip": "130.179.3.149",
+            "mac_address": null,
+            "latency": 4.0
+        },
+        {
+            "host": "ddi-ns4-2.cc.umanitoba.ca",
+            "ip": "130.179.3.151",
+            "mac_address": null,
+            "latency": 4.0
+        },
+        {
+            "host": "cacti.cc.umanitoba.ca",
+            "ip": "130.179.3.155",
+            "mac_address": null,
+            "latency": 130.179
+        },
+        {
+            "host": "setup09.cc.umanitoba.ca",
+            "ip": "130.179.3.159",
+            "mac_address": null,
+            "latency": 9.0
+        }
+    ]
+}

@@ -9,6 +9,8 @@ import struct
 import datetime
 import argparse
 import traceback
+import shutil
+
 
 # Args from the CLI
 args = None
@@ -877,6 +879,7 @@ class Lan(object):
             self.netmask = ifaceNetmask
             self.prefix = ifacePrefix
         if ifaceNetmask != self.netmask or ifacePrefix != self.prefix:
+            print("TEST", ifaceNetmask, self.netmask, ifacePrefix, self.prefix)
             raise Exception("Interface `%s` in LAN `%s` has different prefix!" % (iface.index, self.name))
 
         self.interfaces.append(iface)
@@ -972,6 +975,26 @@ def launch_lab():
         os.system("$NETKIT_HOME/lwipe")
         os.system("$NETKIT_HOME/lstart")
 
+def copy_netvis():
+    # Define the source file path
+    print(os.listdir())
+    source_file = "../net-vis-localhost-win.exe"
+
+    # Define the destination folder path
+    destination_folder = os.path.join(os.getcwd(), "lab")
+
+    # Check if the destination folder exists, if not create it
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+
+    # Define the destination file path
+    destination_file = os.path.join(destination_folder, source_file)
+
+    # Copy the file
+    shutil.copy(source_file, destination_file)
+
+    print(f"File '{source_file}' copied to '{destination_file}'")
+
 def parse():
     print("####################################################")
     print("#                                                  #")
@@ -1037,3 +1060,4 @@ if __name__ == '__main__':
 
     parse()
     launch_lab()
+    copy_netvis()
