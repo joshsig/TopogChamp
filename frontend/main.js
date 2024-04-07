@@ -73,11 +73,12 @@ function updateData(selectedLevel) {
                     resetData();
             } else if (event.key === "e") {
                 if(!adding_edge) {
+                    network.enableEditMode();
                     network.addEdgeMode();
-                    adding_edge = !adding_edge;
+                    adding_edge = true;
                 } else {
                     network.disableEditMode();
-                    adding_edge = !adding_edge;
+                    adding_edge = false;
                 }
             } else if (event.key === "d") {
                 network.deleteSelected();

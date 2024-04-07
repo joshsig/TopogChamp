@@ -54,10 +54,6 @@ nav {
 
 }
 
-#level_select {
-    
-}
-
 p {
 
     font-variation-settings: 'wght' 100;
@@ -201,8 +197,9 @@ p {
 }
 
 #correct {
-    margin: 30px;
+    margin: 60px;
     min-height: 30px;
+    font-size: xx-large;
 }
 
 #hotkeys {
