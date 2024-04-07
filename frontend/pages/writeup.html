@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>COMP4300 - Networking Project</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+    </style>
+  </head>
+  <body>
+    <h1>Network TopogChamp</h1>
+    <nav id="navbar">
+      <a id="navBtn" href="/index.html">Home</a>
+      <a id="navBtn_selected" href="/pages/writeup.html">Write Up</a>
+      <a id="navBtn" href="/pages/game.html">Game</a>
+      <a id="navBtn" href="/pages/simulation.html">Simulation</a>
+    </nav>
+    <div id="writeup">
+      <h1 id="comp-4300---topogchamp-writeup">
+        COMP 4300 - TopogChamp Writeup
+      </h1>
+      <h2 class="writeup_header" id="introduction">Introduction</h2>
+      <p>
+        The goal of this project is to provide a interactive tool that
+        facilitates the learning of the OSI model network layer for those who
+        are visual learners. By applying networking terms and concepts taught
+        during lectures to our project, we hoped to reinforce our learning by
+        implementing these ideas into an open-ended application that allows the
+        user to build and simulate their own networks. Simplified controls such
+        as drag-and-drop for organizing end-systems and network links make our
+        application more accessible when compared to a tool that uses a command
+        line or a simple GUI. A tool with high accessibility and an easy-to-use
+        interface can be used to effectively teach grade school students or
+        casual learners about different networking concepts.
+      </p>
+      <h2 class="writeup_header" id="frontend-network-node-interface">
+        Frontend: Network Node Interface
+      </h2>
+      <p>
+        In order to provide an interactive and appealing interface for our
+        application, we made use of the open source <code>vis.js</code> network
+        visualization tool. This tool provides an easy means of organizing
+        network nodes on a blank canvas through the use of drag-and-drop
+        controls. These nodes are connected by edges. The user can then create
+        or delete edges between nodes using a simple edge editor toolbar at the
+        top left of the screen. <code>vis.js</code> on its own does not provide
+        network emulation capabilities, so we had to use a different tool for
+        such simulations.
+      </p>
+      <h2 class="writeup_header" id="backend-network-emulation">
+        Backend: Network Emulation
+      </h2>
+      <p>
+        The networking layer of the OSI model is a multifaceted ordeal. One must
+        take several factors into consideration to ensure that packets are
+        promptly delivered to the intended recipient without issues. These
+        factors include, but are not limited to, network delays, packet loss and
+        bandwidth limitations. By using the open source tool Kathara, we may
+        simulate these factors in a sandbox environment. Kathara allows the user
+        to create and run simulated devices. These devices may then communicate
+        with other simulated devices.
+      </p>
+      <p>
+        The node and edge structures created by the user through
+        <code>vis.js</code> can then be converted into a network of Kathara
+        devices before starting a simulation. The purpose of such a simulation
+        would be to test the ruggedness of the user's design under adverse
+        conditions. We may then design simple levels that ask the user to reach
+        certain goals such as a reaching target throughput or ensuring that a
+        network packet reaches the proper recipient by following correct router
+        links.
+      </p>
+      <h2 class="writeup_header" id="conclusion">Conclusion</h2>
+      <p>
+        By combining the interactive capabilities of <code>vis.js</code> and the
+        emulation capabilities of Kathara, we are able to create an application
+        that allows for an accessible means of organizing and running simulated
+        Kathara devices. This opens up networking concepts to those who prefer
+        learning with a visual aid, or those who would like to design and test
+        their own networks without much hassle or command line usage.
+      </p>
+    </div>
+  </body>
+</html>
