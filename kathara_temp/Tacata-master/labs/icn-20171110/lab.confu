@@ -1,0 +1,37 @@
+# No static routing between r1,r2,r3,r4, OSPF is used.
+
+web[0]="B"		$ip(30.0.0.2/24); to(default, 30.0.0.1); has_name(web.roma3.it)
+$webserver(web)
+
+roma3[0]="B"		$ip(30.0.0.3/24); to(default, 30.0.0.1)
+$dns(roma3, eth0, roma3.it, master)
+
+it[0]="B"		$ip(30.0.0.4/24); to(default, 30.0.0.1)
+$dns(it, eth0, it, master)
+
+r1[0]="F"		$ip(10.0.0.14/30); ospf_cost(90)
+r1[1]="C"		$ip(10.0.0.1/30)
+$ospf(r1, 10.0.0.0/16, 0.0.0.0, connected)
+
+r2[0]="C"		$ip(10.0.0.2/30)
+r2[1]="A"		$ip(20.0.0.1/24)
+r2[2]="D"		$ip(10.0.0.5/30)
+$ospf(r2, 10.0.0.0/16, 0.0.0.0, connected)
+
+r3[0]="D"		$ip(10.0.0.6/30); ospf_cost(90)
+r3[1]="E"		$ip(10.0.0.9/30)
+$ospf(r3, 10.0.0.0/16, 0.0.0.0, connected)
+
+r4[0]="E"		$ip(10.0.0.10/30)
+r4[1]="B"		$ip(30.0.0.1/24)
+r4[2]="F"		$ip(10.0.0.13/30)
+$ospf(r4, 10.0.0.0/16, 0.0.0.0, connected)
+
+client[0]="A"		$ip(20.0.0.2/24); to(default, 20.0.0.1); 
+$ns_resolv(client, local|eth0)
+
+local[0]="A"		$ip(20.0.0.3/24); to(default, 20.0.0.1);
+$dns(local, eth0, None, local)
+
+root[0]="A"		$ip(20.0.0.4/24); to(default, 20.0.0.1)
+$dns(root, eth0, ROOT, master)

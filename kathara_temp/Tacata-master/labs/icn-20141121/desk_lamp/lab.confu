@@ -1,0 +1,30 @@
+rip1[0]="A"		$ip(2.1.0.1/24);
+rip1[1]="H"		$ip(2.4.0.1/24);
+$rip(rip1, 2.0.0.0/8);
+
+rip2[0]="A"		$ip(2.1.0.2/24);
+rip2[1]="B"		$ip(2.2.0.2/24);
+$rip(rip2, 2.0.0.0/8);
+
+rip3[0]="B"		$ip(2.2.0.3/24);
+rip3[1]="C"		$ip(2.3.0.3/24);
+$rip(rip3, 2.0.0.0/8)
+
+rip-ospf[0]="D"		$ip(3.1.0.4/24); ospf_cost(50);
+rip-ospf[1]="G"		$ip(3.4.0.4/24); ospf_cost(10);
+rip-ospf[2]="H"		$ip(2.4.0.4/24);
+rip-ospf[3]="C"		$ip(2.3.0.4/24);
+$rip(rip-ospf, 2.0.0.0/8, ospf, connected);
+$ospf(rip-ospf, 3.0.0.0/8, 0.0.0.0, rip, connected);
+
+ospf1[0]="E"		$ip(3.2.0.1/24); ospf_cost(10);
+ospf1[1]="D"		$ip(3.1.0.1/24); ospf_cost(50);
+$ospf(ospf1, 3.0.0.0/8, 0.0.0.0)
+
+ospf2[0]="F"		$ip(3.3.0.2/24); ospf_cost(10);
+ospf2[1]="E"		$ip(3.2.0.2/24); ospf_cost(10);
+$ospf(ospf2, 3.0.0.0/8, 0.0.0.0)
+
+ospf3[0]="G"		$ip(3.4.0.3/24); ospf_cost(10);
+ospf3[1]="F"		$ip(3.3.0.3/24); ospf_cost(10);
+$ospf(ospf3, 3.0.0.0/8, 0.0.0.0)

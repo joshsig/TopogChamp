@@ -1,0 +1,20 @@
+host[0]="A"		$ip(1.0.0.10/24); to(default, 1.0.0.1)
+$ns_resolv(host, ns-local|eth0)
+
+ns-local[0]="A"		$ip(1.0.0.20/24); to(default, 1.0.0.1)
+$dns(ns-local, eth0, None, local)
+
+router2[0]="B"		$ip(2.0.0.2/24); to(3.0.0.0/24, 2.0.0.1)
+router2[1]="A"		$ip(1.0.0.1/24);
+
+router1[0]="B"		$ip(2.0.0.1/24); to(1.0.0.0/24, 2.0.0.2)
+router1[1]="C"		$ip(3.0.0.1/24)
+
+ns-root[0]="B"		$ip(2.0.0.10/24); to(default, 2.0.0.2)
+$dns(ns-root, eth0, ROOT, master)
+
+ns-me[0]="C"		$ip(3.0.0.10/24); to(default, 3.0.0.1)
+$dns(ns-me, eth0, me, master)
+
+apache[0]="C"		$ip(3.0.0.20/24); to(default, 3.0.0.1); has_name(open.me)
+$webserver(apache)

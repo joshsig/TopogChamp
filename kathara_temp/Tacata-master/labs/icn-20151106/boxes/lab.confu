@@ -1,0 +1,20 @@
+laptop[0]="A"		$ip(10.1.0.4/24); to(default, 10.1.0.1)
+$ns_resolv(laptop, dns1|eth0)
+
+dns1[0]="A"		$ip(10.1.0.2/24); to(default, 10.1.0.1)
+$dns(dns1, eth0, None, local)
+
+apache[0]="A"		$ip(10.1.0.3/24); to(default, 10.1.0.1); has_name(my.site)
+$webserver(apache)
+
+rtr1[0]="A"		$ip(10.1.0.1/24);
+rtr1[1]="B"		$ip(10.2.0.1/24); to(10.3.0.0/24, 10.2.0.3)
+
+dns2[0]="B"		$ip(10.2.0.2/24); to(default, 10.2.0.3)
+$dns(dns2, eth0, ROOT, master)
+
+rtr2[0]="B"		$ip(10.2.0.3/24); to(10.1.0.0/24, 10.2.0.1)
+rtr2[1]="C"		$ip(10.3.0.1/24); 
+
+dns3[0]="C"		$ip(10.3.0.2/24); to(default, 10.3.0.1)
+$dns(dns3, eth0, site, master)

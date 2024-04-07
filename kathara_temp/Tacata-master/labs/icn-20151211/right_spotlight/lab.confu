@@ -1,0 +1,53 @@
+as10r1[0]="E"		$ip(10.0.0.1/24)
+as10r1[1]="A"		$ip(1.0.0.1/29)
+as10r1[2]="B"		$ip(1.1.0.1/29)
+# Write route-map as follows:
+# neighbor 1.1.0.2 route-map chooseThis in
+# !
+# route-map chooseThis permit 10
+#     set local-preference 150
+$bgp(as10r1, 10, as20r2|eth2); bgp_announce(as10r1, 1.1.0.0/29)
+$bgp(as10r1, 10, as30r1|eth3); bgp_announce(as10r1, 1.0.0.0/29)
+$bgp_announce(as10r1, 10.0.0.0/8)
+
+as30r1[0]="F"		$ip(30.0.0.1/24)
+as30r1[1]="J"		$ip(1.1.1.2/29)
+as30r1[2]="K"		$ip(1.1.2.2/29)
+as30r1[3]="A"		$ip(1.0.0.2/29)
+# Write route-map as follows:
+# neighbor 1.1.2.1 route-map dontChooseMe out
+# !
+# route-map dontChooseMe permit 10
+#     set metric 20
+$bgp(as30r1, 30, as20r3|eth0); bgp_announce(as30r1, 1.1.1.0/29)
+$bgp(as30r1, 30, as20r1|eth0); bgp_announce(as30r1, 1.1.2.0/29)
+$bgp(as30r1, 30, as10r1|eth1); bgp_announce(as30r1, 1.0.0.0/29)
+$bgp_announce(as30r1, 30.0.0.0/8)
+
+as20r1[0]="K"		$ip(1.1.2.1/29)
+as20r1[1]="D"		$ip(20.1.4.1/24)
+as20r1[2]="C"		$ip(20.1.2.1/24)
+$bgp(as20r1, 20, as30r1|eth2); bgp_announce(as20r1, 1.1.2.0/29)
+$bgp(as20r1, 20, as20r2|eth0)
+$bgp(as20r1, 20, as20r3|eth1)
+$ospf(as20r1, 20.0.0.0/8, 0.0.0.0, connected)
+
+as20r2[0]="C"		$ip(20.1.2.2/24)
+as20r2[1]="G"		$ip(20.2.4.2/24); ospf_cost(90)
+as20r2[2]="B"		$ip(1.1.0.2/29)
+$bgp(as20r2, 20, as10r1|eth2); bgp_announce(as20r2, 1.1.0.0/29)
+$bgp(as20r2, 20, as20r1|eth2)
+$bgp(as20r2, 20, as20r3|eth1)
+$ospf(as20r2, 20.0.0.0/8, 0.0.0.0, connected)
+
+as20r3[0]="J"		$ip(1.1.1.3/29)
+as20r3[1]="H"		$ip(20.3.4.3/24)
+$bgp(as20r3, 20, as30r1|eth1); bgp_announce(as20r3, 1.1.1.0/29)
+$bgp(as20r3, 20, as20r1|eth1)
+$bgp(as20r3, 20, as20r2|eth0)
+$ospf(as20r3, 20.0.0.0/8, 0.0.0.0, bgp, connected)
+
+as20r4[0]="H"		$ip(20.3.4.4/24)
+as20r4[1]="G"		$ip(20.2.4.4/24)
+as20r4[2]="D"		$ip(20.1.4.4/24)
+$ospf(as20r4, 20.0.0.0/8, 0.0.0.0, bgp, connected)

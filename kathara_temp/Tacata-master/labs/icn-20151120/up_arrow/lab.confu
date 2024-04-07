@@ -1,0 +1,36 @@
+client[0]="S"			$ip(10.0.0.2/24); to(default, 10.0.0.1);
+
+side2[0]="S"			$ip(10.0.0.1/24);
+side2[1]="K"			$ip(30.0.0.1/24);
+side2[2]="N"			$ip(30.1.0.1/24);
+$rip(side2, 30.0.0.0/8, connected)
+
+center2[0]="N"			$ip(30.1.0.2/24);
+center2[1]="I"			$ip(30.2.0.2/24);
+$rip(center2, 30.0.0.0/8)
+
+side1[0]="I"			$ip(30.2.0.1/24);
+side1[1]="L"			$ip(30.3.0.1/24);
+$rip(side1, 30.0.0.0/8)
+
+br1[0]="L"			$ip(30.3.0.2/24);
+br1[1]="H"			$ip(40.0.0.1/24);
+br1[2]="T"			$ip(40.2.0.1/24); ospf_cost(90);
+$ospf(br1, 40.0.0.0/8, 0.0.0.0, rip)
+# Remember to add route 20.0.0.0/24 in ripd.conf file.
+$rip(br1, 30.0.0.0/8)
+
+br2[0]="K"			$ip(30.0.0.2/24);
+br2[1]="E"			$ip(40.1.0.1/24);
+br2[2]="H"			$ip(40.0.0.2/24);
+$ospf(br2, 40.0.0.0/8, 0.0.0.0)
+# Remember to add route 0.0.0.0/0 in ripd.conf file.
+$rip(br2, 30.0.0.0/8)
+
+center1[0]="E"			$ip(40.1.0.2/24); ospf_cost(90);
+center1[1]="A"			$ip(20.0.0.1/24);
+center1[2]="T"			$ip(40.2.0.2/24);
+$ospf(center1, 40.0.0.0/8, 0.0.0.0, connected)
+
+www-server[0]="A"		$ip(20.0.0.2/24); to(default, 20.0.0.1)
+$webserver(www-server)

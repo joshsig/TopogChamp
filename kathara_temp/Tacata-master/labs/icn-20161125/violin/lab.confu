@@ -1,0 +1,17 @@
+user-pc[0]="A"		$ip(20.0.0.20/24); to(default, 20.0.0.1)
+
+r1[0]="A"		$ip(20.0.0.1/24);
+r1[1]="B"		$ip(30.0.0.1/24); to(40.0.0.0/24, 30.0.0.2)
+
+r2[0]="B"		$ip(30.0.0.2/24); to(20.0.0.0/24, 30.0.0.1)
+r2[1]="C"		$ip(40.0.0.1/24);
+
+ws1[0]="D"		$ip(10.0.0.11/24); to(default, 10.0.0.1)
+$webserver(ws1)
+
+ws2[0]="D"		$ip(10.0.0.22/24); to(default, 10.0.0.1)
+$webserver(ws2)
+
+l4switch[0]="C"		$ip(40.0.0.40/24); to(default, 40.0.0.1)
+l4switch[1]="D"		$ip(10.0.0.1/24);
+$balancer(l4switch, nth, eth0, ws1|eth0, ws2|eth0)

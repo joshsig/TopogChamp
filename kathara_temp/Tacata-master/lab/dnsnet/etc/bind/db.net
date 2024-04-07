@@ -1,0 +1,10 @@
+$TTL   60000
+@               IN      SOA     dnsnet.net.    root.dnsnet.net. 2024033113 28800 14400 3600000 0
+
+@     IN  NS  dnsnet.net.
+dnsnet    IN  A   192.168.0.2
+
+nanoinside    IN  NS  dnsnano.nanoinside.net.
+dnsnano.nanoinside IN  A   192.168.0.22
+
+

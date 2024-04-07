@@ -84,15 +84,29 @@ def get_local_network_info():
     else:
         network_info['additional_details'] = output.decode()
 
+    # Extract DNS server information from the output
+    dns_servers = []
+    lines = output.decode().split('\n')
+    for line in lines:
+        if 'DNS Servers' in line:
+            print(1, line)
+            dns_servers.extend(line.split(':')[1].strip().split(', '))
+            print(2, line.split(':')[1].strip().split(', '))
+    network_info['dns_servers'] = dns_servers
+
     return network_info
 
 def nmap_network(wifi_address, collect_24=False):
     range_subnet = ""
-    if collect_24:
-        range_subnet = "/24"
-    process = subprocess.Popen(['nmap', '-sn', wifi_address+f"{range_subnet}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #if collect_24:
+
+    range_subnet = "/28"
+    nmap_cmd = ['nmap', '-sn', wifi_address+f"{range_subnet}"]
+    print("NMAP Command: ", nmap_cmd)
+    process = subprocess.Popen(nmap_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output, error = process.communicate()
     print(parse_nmap_output(output))
+    print(error)
     parsed_wifi_connectors = parse_nmap_output(output)
 
     return parsed_wifi_connectors
@@ -101,10 +115,15 @@ def export_to_json(data, filename):
     with open(filename, 'w') as file:
         json.dump(data, file, indent=4)
 
-def get_network_information():
+def get_network_information(default_interface="Wi-Fi"):
     local_network_info = get_local_network_info()
-    wifi_ipv4_address = local_network_info["interfaces"]["Wi-Fi"][0]["ipv4_address"]
-    wifi_ipv4_address_subnet_24 = nmap_network(wifi_address=wifi_ipv4_address)
+
+    # change if needed
+    default_interface = "Ethernet 2"
+    wifi_ipv4_address = local_network_info["interfaces"][default_interface][0]["ipv4_address"]
+    # wifi_ipv4_address - replace if needed
+    dns_address = local_network_info['dns_servers'][0]
+    wifi_ipv4_address_subnet_24 = nmap_network(wifi_address=dns_address)
 
     # Combine local network interface information and network scan results
 
@@ -112,9 +131,10 @@ def get_network_information():
     local_network_info['additional_details'] = "" # remove unnecessary data
     print("test2", local_network_info['additional_details'])
     network_info = {
+        'dns_servers': local_network_info['dns_servers'],
         'local_network_info': local_network_info,
         'wifi_ipv4_addresses': {
-            f'{wifi_ipv4_address}/24': wifi_ipv4_address_subnet_24
+            f'{local_network_info["dns_servers"][0]}/28': wifi_ipv4_address_subnet_24
         },
         'timestamp': str(datetime.now())
     }
@@ -134,5 +154,7 @@ def clean_output(output):
     return cleaned_output
 
 if __name__ == "__main__":
-    print(get_network_information())
-
+    res = get_network_information()
+    print("------------------")
+    print(res)
+    export_to_json(res["wifi_ipv4_addresses"], f"data_{datetime.now().strftime('%Y-%m-%dT%H-%M-%S')}.json")

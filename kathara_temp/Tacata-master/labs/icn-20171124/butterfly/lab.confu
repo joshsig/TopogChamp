@@ -1,0 +1,41 @@
+# Little Variation, here we use BGP to connect the two halves of the network (instead of static routing)
+
+r1[0]="C"		$ip(20.0.0.1/24)
+r1[1]="D"		$ip(20.0.1.1/24)
+r1[2]="A"		$ip(20.0.2.1/24)
+$rip(r1, 20.0.0.0/16, connected)
+
+r2[0]="D"		$ip(20.0.1.2/24)
+r2[1]="F"		$ip(10.0.0.1/30)
+r2[2]="E"		$ip(20.0.3.1/24)
+$rip(r2, 20.0.0.0/16, connected, bgp)
+$bgp(r2, 20, r5|eth0); bgp_announce(r2, 20.0.0.0/16)
+
+r3[0]="B"		$ip(20.0.4.2/24)
+r3[1]="A"		$ip(20.0.2.2/24)
+r3[2]="E"		$ip(20.0.3.2/24)
+$rip(r3, 20.0.0.0/16, connected)
+
+r4[0]="C"		$ip(20.0.0.2/24)
+r4[1]="B"		$ip(20.0.4.1/24)
+$rip(r4, 20.0.0.0/16, connected)
+
+r5[0]="F"		$ip(10.0.0.2/30)
+r5[1]="G"		$ip(30.0.0.1/24)
+r5[2]="L"		$ip(30.0.4.1/24)
+$ospf(r5, 30.0.0.0/16, 0.0.0.0, connected, bgp)
+$bgp(r5, 30, r2|eth1); bgp_announce(r5, 30.0.0.0/16)
+
+r6[0]="G"		$ip(30.0.0.2/24)
+r6[1]="H"		$ip(30.0.1.1/24)
+r6[2]="M"		$ip(30.0.2.1/24)
+$ospf(r6, 30.0.0.0/16, 0.0.0.0, connected)
+
+r7[0]="H"		$ip(30.0.1.2/24)
+r7[1]="I"		$ip(30.0.3.1/24)
+$ospf(r7, 30.0.0.0/16, 0.0.0.0, connected)
+
+r8[0]="L"		$ip(30.0.4.2/24)
+r8[1]="M"		$ip(30.0.2.2/24)
+r8[2]="I"		$ip(30.0.3.2/24)
+$ospf(r8, 30.0.0.0/16, 0.0.0.0, connected)

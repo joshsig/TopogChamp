@@ -1,0 +1,33 @@
+host[0]="A"			$ip(1.0.0.2/24); to(default, 1.0.0.1);
+
+ospf3[0]="A"			$ip(1.0.0.1/24);
+ospf3[1]="D"			$ip(10.0.0.5/30);
+ospf3[2]="C"			$ip(10.0.0.1/30); ospf_cost(90);
+$ospf(ospf3, 10.0.0.0/8, 0.0.0.0, connected);
+
+ospf2[0]="D"			$ip(10.0.0.6/30);
+ospf2[1]="E"			$ip(10.0.0.9/30);
+$ospf(ospf2, 10.0.0.0/8, 0.0.0.0);
+
+ospf1[0]="C"			$ip(10.0.0.2/30); ospf_cost(90);
+ospf1[1]="E"			$ip(10.0.0.10/30);
+ospf1[2]="F"			$ip(10.1.0.2/30);
+$ospf(ospf1, 10.0.0.0/8, 0.0.0.0);
+
+br[0]="G"			$ip(11.1.0.1/30);
+br[1]="F"			$ip(10.1.0.1/30);
+$ospf(br, 10.0.0.0/8, 0.0.0.0, rip);
+# Remember to declare networks 1.0.0.0/24 and 10.0.0.0/8 in ripd.conf file.
+$rip(br, 11.0.0.0/8);
+
+rip1[0]="H"			$ip(11.0.0.1/30)
+rip1[1]="G"			$ip(11.1.0.2/30);
+$rip(rip1, 11.0.0.0/8);
+
+rip2[0]="B"			$ip(2.0.0.1/24);
+rip2[1]="H"			$ip(11.0.0.2/30);
+$rip(rip2, 11.0.0.0/8, connected);
+
+server[0]="B"			$ip(2.0.0.2/24); to(default, 2.0.0.1)
+$webserver(server);
+

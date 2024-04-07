@@ -1,0 +1,53 @@
+as100r1[0]="J"			$ip(100.0.0.1/24)
+as100r1[1]="C"			$ip(100.200.2.1/30)
+as100r1[2]="D"			$ip(100.200.1.1/30)
+# Write route-map as follows:
+# neighbor 100.200.1.2 route-map dontChooseMe out
+# !
+# route-map dontChooseMe permit 10
+#     set metric 20
+$bgp(as100r1, 100, as200r2|eth2); bgp_announce(as100r1, 100.200.2.0/30)
+$bgp(as100r1, 100, as200r3|eth2); bgp_announce(as100r1, 100.200.1.0/30)
+$bgp_announce(as100r1, 100.0.0.0/8)
+
+as200r1[0]="H"			$ip(1.3.0.1/24)
+as200r1[1]="E"			$ip(1.4.0.3/24)
+as200r1[2]="G"			$ip(1.2.0.1/24); ospf_cost(90)
+$ospf(as200r1, 1.0.0.0/8, 0.0.0.0, connected)
+
+as200r2[0]="G"			$ip(1.2.0.2/24)
+as200r2[1]="F"			$ip(1.1.0.2/24)
+as200r2[2]="C"			$ip(100.200.2.2/30)
+$bgp(as200r2, 200, as100r1|eth1); bgp_announce(as200r2, 100.200.2.0/30)
+$bgp(as200r2, 200, as200r3|eth3)
+$bgp(as200r2, 200, as200r4|eth1)
+$ospf(as200r2, 1.0.0.0/8, 0.0.0.0, bgp, connected)
+
+as200r3[0]="E"			$ip(1.4.0.3/24)
+as200r3[1]="A"			$ip(200.150.1.1/30)
+as200r3[2]="D"			$ip(100.200.1.2/30)
+as200r3[3]="F"			$ip(1.1.0.3/24)
+$bgp(as200r3, 200, as300r1|eth1); bgp_announce(as200r3, 200.150.1.0/30)
+$bgp(as200r3, 200, as100r1|eth2); bgp_announce(as200r3, 100.200.1.0/30)
+$bgp(as200r3, 200, as200r2|eth1)
+$bgp(as200r3, 200, as200r4|eth1)
+$ospf(as200r3, 1.0.0.0/8, 0.0.0.0, bgp, connected)
+
+as200r4[0]="B"			$ip(200.150.2.1/30)
+as200r4[1]="H"			$ip(1.3.0.4/24)
+$bgp(as200r4, 200, as300r1|eth2); bgp_announce(as200r4, 200.150.2.0/30)
+$bgp(as200r4, 200, as200r3|eth0)
+$bgp(as200r4, 200, as200r2|eth1)
+$ospf(as200r4, 1.0.0.0/8, 0.0.0.0, bgp, connected)
+
+as300r1[0]="K"			$ip(150.0.0.1/24)
+as300r1[1]="A"			$ip(200.150.1.2/30)
+as300r1[2]="B"			$ip(200.150.2.2/30)
+# Write route-map as follows:
+# neighbor 200.150.2.1 route-map chooseThis in
+# !
+# route-map chooseThis permit 10
+#     set local-preference 150
+$bgp(as300r1, 300, as200r3|eth1); bgp_announce(as300r1, 200.150.1.0/30)
+$bgp(as300r1, 300, as200r4|eth0); bgp_announce(as300r1, 200.150.2.0/30)
+$bgp_announce(as300r1, 150.0.0.0/8)
