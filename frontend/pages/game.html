@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>COMP4300 - Networking Project</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+    </style>
+  </head>
+  <body>
+    <h1>Network TopogChamp</h1>
+    <nav id="navbar">
+      <a id="navBtn" href="/index.html">Home</a>
+      <a id="navBtn" href="/pages/writeup.html">Write Up</a>
+      <a id="navBtn_selected" href="/pages/game.html">Game</a>
+      <a id="navBtn" href="/pages/simulation.html">Simulation</a>
+    </nav>
+    <div id="game">
+      <div id="controlButtonContainer">
+        <div id="goal_wrapper">
+          <h3>Level Goal:</h3>
+          <div id="goal"></div>
+        </div>
+        <select
+          class="controlButton"
+          id="levelSelect"
+          onchange="updateData(this.value)"
+        >
+          <option class="levelValue" value="ring">Ring</option>
+          <option class="levelValue" value="star">Star</option>
+          <option class="levelValue" value="bus">Bus</option>
+          <option class="levelValue" value="fully_connected">
+            Fully Connected Mesh
+          </option>
+          <option class="levelValue" value="partial_connected">
+            Partially Connected Mesh
+          </option>
+          <!-- Add more options for additional levels -->
+        </select>
+
+        <button
+          class="controlButton"
+          id="submitAnswerBtn"
+          onclick="submitAnswer()"
+        >
+          Submit Answer
+        </button>
+        <button class="controlButton" id="resetButton" onclick="resetData()">
+          Reset Network
+        </button>
+        <div id="correct"></div>
+      </div>
+      <div id="mynetwork"></div>
+    </div>
+    <div id="hotkeys">
+      <p><code>e</code> to add edges</p>
+      <p><code>d</code> to delete selected</p>
+      <p><code>enter</code> to submit answer</p>
+      <p><code>r</code> to reset network</p>
+    </div>
+    <script type="text/javascript" src="/main.js"></script>
+  </body>
+</html>
