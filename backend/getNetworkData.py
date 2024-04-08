@@ -157,9 +157,6 @@ def clean_output(output):
 
     return cleaned_output
 
-def convert_to_lab_confu_format():
-    pass
-
 def json_to_lab_confu(json_data):
     # DNS scenario
     lab_confu = ""
@@ -208,9 +205,6 @@ def json_to_lab_confu(json_data):
             for item in json_data[key]:
                 hostname_loc = item["host"].replace(".", "_").replace("-", "")
                 ip_address_loc = item["ip"]
-
-                #if not hostname_loc:
-                #    hostname_loc = ip_address_loc
 
                 lab_confu += f"$dns({hostname_loc}, eth0, {item['host']}, master)\n"
 
