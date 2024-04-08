@@ -12,6 +12,9 @@ A network topology simulation and educational game.
 
 ## Dependencies
 
+User must be connected to the University of Manitoba network to run the project.
+
+- Windows
 - Browser (Google Chrome recommended)
 - Python 3.6
 - pip3
@@ -21,8 +24,14 @@ A network topology simulation and educational game.
   - flask
   - flask-cors
 - npm
-- live-server
-- xterm
+  - live-server
+- [Kathara](https://github.com/KatharaFramework/Kathara-Labs)
+
+## Libraries Used
+
+- [Tacata](https://github.com/damiano-massarelli/Tacata)
+- [Net-Vis](https://github.com/Friscobuffo/net-vis-localhost)
+- [vis.js](https://visjs.org/)
 
 ## How to Run
 
@@ -32,4 +41,4 @@ A network topology simulation and educational game.
     chmod +x run.sh
     ./run.sh
     ```
-3. Browser should open automatically, if not, navigate to `localhost:8080` in your browser
+3. Browser _should_ open automatically, if not, navigate to `localhost:8080` in your browser
