@@ -1,4 +1,4 @@
-pc1[0]="A"        $ip(130.179.217.231/16); has_name(pc1.ddi-ns3.cc.umanitoba.ca)
+pc1[0]="A"        $ip(130.179.217.194/16); has_name(pc1.ddi-ns3.cc.umanitoba.ca)
 $ns_resolv(pc1, ddins3_cc_umanitoba_ca|eth0)
 
 ddins3_cc_umanitoba_ca[0]="A"     $ip(130.179.3.144/16)

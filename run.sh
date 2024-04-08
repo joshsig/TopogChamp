@@ -1,9 +1,10 @@
 #!/bin/bash
-
+c
 cleanup() {
     echo "Cleaning up..."
-    pkill -TERM -f "xterm -e ./net-vis-localhost-win.exe"
-    pkill -TERM -f "xterm -e cd frontend && npx live-server"
+    taskkill /IM "python3.exe" /F >nul 2>&1
+    taskkill /IM "live-server.cmd" /F >nul 2>&1
+    taskkill /IM "net-vis-localhost-win.exe" /F >nul 2>&1
     exit 0
 }
 
@@ -23,7 +24,7 @@ fi
 
 # Install Python dependencies
 echo "Installing Python dependencies..."
-pip install -r backend/requirements.txt
+python3 -m pip install -r backend/requirements.txt
 
 # Check if installation was successful
 if [ $? -ne 0 ]; then
@@ -39,25 +40,28 @@ fi
 
 cd backend || exit
 python3 getNetworkData.py &
+
+cd Tacata-master || exit
+
+# Check if lab directory exists, if exists remove it
+if [ -d "lab" ]; then
+    rm -rf lab
+fi
+
+# Copy lab.confu into Tacata-master folder
 cd ..
+cp lab.confu Tacata-master
 
-# Run Kathara
-if [ ! -d "kathara" ]; then
-    echo "kathara directory not found."
-    exit 1
-fi
+# Run Tacata.py
+cd Tacata-master || exit
+python3 Tacata.py
 
-if [ ! -d "kathara/Tacata-master" ]; then
-    echo "Tacata-master directory not found."
-    exit 1
-fi
+# Run Lab
+kathara lstart
 
-if [ ! -d "kathara/Tacata-master/lab" ]; then
-    echo "lab directory not found."
-    exit 1
-fi
-
-cd kathara/Tacata-master/lab || exit
+# Run Netvis inside lab folder
+cd lab || exit
+mv net-vis-localhost-win.exe .
 
 if [ ! -f "net-vis-localhost-win.exe" ]; then
     echo "net-vis-localhost-win.exe not found."
@@ -65,10 +69,10 @@ if [ ! -f "net-vis-localhost-win.exe" ]; then
 fi
 
 echo "Running net-vis-localhost-win.exe"
-xterm -e "./net-vis-localhost-win.exe" &
+start "" "net-vis-localhost-win.exe"
 sleep 5
 
-cd ../../.. || exit
+cd ../.. || exit
 
 # Check if live-server is installed
 if ! command -v live-server &> /dev/null; then
@@ -76,6 +80,7 @@ if ! command -v live-server &> /dev/null; then
     exit 1
 fi
 
+cd ..
 # Check if the frontend directory exists
 if [ ! -d "frontend" ]; then
     echo "frontend directory not found."
@@ -88,10 +93,9 @@ if [ ! -f "frontend/index.html" ]; then
     exit 1
 fi
 
+cd frontend || exit
 # Open another terminal and run live-server with index.html file
-xterm -e "cd frontend && npx live-server" &
+start "" "live-server"
 
-echo "Press Ctrl+C to exit..."
-while true; do
-    sleep 1
-done
+echo "Press Enter to exit..."
+read -r
