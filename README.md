@@ -42,3 +42,7 @@ User must be connected to the University of Manitoba network to run the project.
     ./run.sh
     ```
 3. Browser _should_ open automatically, if not, navigate to `localhost:8080` in your browser
+
+## FAQ
+
+1. If run.sh script does not run try replacing all python3 instances with python and pip3 with pip inside run.sh script.
